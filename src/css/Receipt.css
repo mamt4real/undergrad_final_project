@@ -1,0 +1,22 @@
+.receipt {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: white;
+  padding: 15px;
+}
+/* .receipt > * {
+  color: black;
+} */
+
+.receipt .rtp-row,
+.receipt .rtp-text {
+  display: flex;
+  justify-content: space-between;
+  color: black;
+}
+
+.receipt .actions {
+  justify-content: center;
+  gap: 20px;
+}

@@ -1,0 +1,78 @@
+.dashboard.container {
+  min-width: 85vw;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 10px;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.dashboard .tiles_container {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  min-width: 100%;
+  background-color: var(--bg-dark);
+}
+
+.tiles_container > .MuiCard-root {
+  min-width: 300px;
+  margin: 0 auto;
+}
+
+.tiles_container .MuiCardContent-root {
+  background-color: var(--bg-light);
+  color: white;
+  height: 100%;
+}
+
+.tiles_container span.money {
+  font-size: 18pt;
+  flex: 1;
+  text-align: right;
+}
+.tiles_container span.key {
+  font-weight: bold;
+  font-size: 12.5pt;
+  margin-right: 8px;
+  font-variant: small-caps;
+}
+
+.dashboard .charts_container {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+}
+
+.charts_container > div {
+  background-color: var(--bg-light);
+  border-radius: 24px;
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+}
+
+.charts_container > .left {
+  padding: 20px;
+}
+.charts_container > .right {
+  /* width: 70%; */
+  max-height: fit-content;
+}
+@media screen and (min-width: 900px) {
+  .dashboard .charts_container {
+    flex-direction: row;
+  }
+  .charts_container > .left {
+    width: 30%;
+  }
+  .charts_container > .right {
+    width: 70%;
+  }
+  .tiles_container > .MuiCard-root {
+    min-width: 300px;
+    margin: none;
+  }
+}

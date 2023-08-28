@@ -1,0 +1,66 @@
+.invoice {
+  text-decoration: none;
+  cursor: pointer;
+  gap: 16px;
+  margin-bottom: 16px;
+  color: #fff;
+  border-radius: 20px;
+  padding: 18px;
+  background-color: #1e2139;
+  align-items: center;
+}
+.invoice span {
+  font-size: 7.5pt;
+}
+
+.invoice .left {
+  align-items: center;
+  flex-basis: 60%;
+  gap: 10px;
+}
+.invoice .left span {
+  flex: 1;
+}
+
+.invoice .left .tracking-number {
+  text-transform: uppercase;
+  font-size: 8.3pt;
+}
+
+.invoice .right {
+  gap: 10px;
+  flex-basis: 40%;
+  align-items: center;
+}
+
+.invoice .right .status-button {
+  display: none;
+}
+
+.invoice .right .price {
+  flex: 1;
+  font-size: 8.5pt;
+  font-weight: 600;
+}
+
+@media screen and (min-width: 900px) {
+  .invoice {
+    padding: 28px 32px;
+  }
+  .invoice span {
+    font-size: 13px;
+  }
+  .invoice .left,
+  .invoice .right {
+    gap: 16px;
+  }
+  .invoice .left .tracking-number {
+    font-size: small;
+  }
+  .invoice .right .price {
+    font-size: 16px;
+  }
+  .invoice .right .status-button {
+    display: flex;
+  }
+}

@@ -1,0 +1,18 @@
+.users.container {
+  border-radius: 30px;
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  background-color: var(--bg-light);
+  padding: 20px;
+  margin-top: 10px;
+}
+
+@media screen and (min-width: 900px) {
+  .users.container {
+    padding: 40px;
+    margin-top: 20px;
+  }
+  .green.new_btn {
+    padding: 8px 12px;
+    max-width: 120px;
+  }
+}

@@ -1,0 +1,66 @@
+.loginform {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 500px;
+  color: white;
+  padding: 20px 15px;
+  border-radius: 20px;
+  background-color: var(--bg-dark);
+  align-items: center;
+}
+
+.loginform h2 {
+  margin-bottom: 3rem;
+}
+
+.loginform .input {
+  width: 85%;
+}
+
+.input label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.loginform .input label {
+  /* font-size: large; */
+  margin-bottom: 12px;
+}
+
+.loginform .input input {
+  /* font-size: large; */
+  padding-left: 10px;
+}
+
+button.login_btn {
+  margin: 20px auto;
+  width: 60%;
+  transition: 0.3s;
+  font-size: large;
+}
+
+button.login_btn:hover {
+  transform: translateY(-3px);
+}
+
+.loginform .message {
+  color: #ec5757;
+  font-size: medium;
+  margin-bottom: 10px;
+  transition: 0.3s;
+  font-style: italic;
+}
+
+@media screen and (min-width: 900px) {
+  .loginform {
+    width: 90%;
+  }
+  .loginform .input label {
+    font-size: large;
+  }
+  .loginform .input input {
+    font-size: large;
+  }
+}

@@ -1,0 +1,87 @@
+.navigation {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.navigation .brand {
+  flex-direction: row;
+  background-color: #1e2139;
+  padding-bottom: 15px;
+}
+
+.navigation .brand .branding {
+  border-radius: 0 20px 20px 0;
+  /* background-color: #7c5bfa; */
+  justify-content: center;
+  padding: 24px;
+}
+.navigation .brand .branding img {
+  width: auto;
+  height: 30px;
+}
+
+.navigation .links {
+  display: flex;
+  flex: 1;
+}
+
+.navigation .links .navlink {
+  padding: 5px;
+  margin: 5px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: solid 1px white; */
+}
+
+.navigation .MuiSvgIcon-root {
+  fill: white;
+  width: 25px;
+  height: 25px;
+}
+
+.navigation .navlink.active {
+  border-radius: 0 0 20px 20px;
+  background-color: #7c5bfa;
+}
+
+.navigation .logout_btn.MuiIconButton-root {
+  background-color: red;
+  margin: auto 10px;
+  height: 40px;
+  width: 40px;
+  display: flex;
+}
+
+@media screen and (min-width: 900px) {
+  .navigation .links {
+    flex-direction: column;
+  }
+  .navigation .links .navlink {
+    padding: 15px;
+    margin: 10px auto;
+  }
+  .navigation .navlink.active {
+    border-radius: 0 20px 20px 0;
+  }
+  .navigation .MuiSvgIcon-root {
+    width: 35px;
+    height: 35px;
+  }
+  .navigation .logout_btn.MuiIconButton-root {
+    width: 60px;
+    height: 60px;
+    margin: 10px auto;
+  }
+  .navigation .brand {
+    min-height: 100%;
+    min-width: 90px;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    border-radius: 0 20px 20px 0;
+  }
+  .navigation .brand .branding {
+    width: 100%;
+  }
+}

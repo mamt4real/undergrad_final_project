@@ -1,0 +1,82 @@
+.reports.container.dashboard {
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  height: 100%;
+}
+
+.reports > section {
+  height: 100%;
+}
+
+.reports > section.left {
+  flex: 0.33;
+  text-align: left;
+}
+.reports > section.right {
+  flex: 0.67;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+section.left > div {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+button.button.preview-btn {
+  width: 100%;
+}
+
+section.left .filter_container .input {
+  flex: 1;
+  justify-content: space-between;
+}
+.quick_metrics > .metric {
+  width: 100%;
+  background-color: var(--bg-light);
+  font-size: large;
+  border-radius: 14px 0 0 14px;
+  display: flex;
+  height: fit-content;
+  margin-bottom: 1rem;
+}
+.quick_metrics > .metric > * {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+.quick_metrics > .metric > .key.MuiTypography-root {
+  background-color: #33d69f;
+  font-weight: bold;
+  padding: 12px;
+  font-size: 14px;
+  border-radius: inherit;
+  color: var(--bg-dark);
+}
+
+.reports > section.right > div {
+  width: 100%;
+}
+.reports > section.right .chart {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 900px) {
+  .quick_metrics > .metric > .key.MuiTypography-root {
+    padding: 20px;
+    font-size: 18px;
+  }
+  .reports.container.dashboard {
+    flex-direction: row;
+  }
+  .reports > section.right .chart {
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+}

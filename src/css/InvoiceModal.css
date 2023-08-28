@@ -1,0 +1,189 @@
+.invoice-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 8px;
+  z-index: 10;
+}
+
+.invoice-wrap .invoice-content {
+  position: relative;
+  padding: 20px;
+  max-width: 650px;
+  width: 100%;
+  background-color: #141625;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.invoice-content h1 {
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.invoice-content h3 {
+  margin-bottom: 16px;
+  font-size: 18px;
+  color: #777f98;
+}
+
+.invoice-content h4 {
+  color: #7c5dfa;
+  font-size: 12px;
+  margin-bottom: 24px;
+}
+
+.input {
+  margin-bottom: 10px;
+}
+.invoice-content input,
+.input label {
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.input input,
+.search_input,
+.input select,
+.invoice-content input,
+.invoice-content select {
+  width: 100%;
+  background-color: #1e2139;
+  color: #fff;
+  border-radius: 4px;
+  padding: 12px 4px;
+  border: none;
+}
+
+.input input:focus,
+.search_input:focus,
+.invoice-content input:focus,
+.input select:focus .invoice-content select:focus {
+  outline: none;
+}
+
+.invoice-content .bill-to,
+.invoice-content .bill-from {
+  margin-bottom: 28px;
+}
+.invoice-content .form__row {
+  gap: 16px;
+}
+.invoice-content .form__row div,
+.invoice-work .payment div {
+  flex: 1;
+}
+
+.invoice-work .payment {
+  gap: 24px;
+}
+
+.invoice-work .work-items .item-list {
+  width: 100%;
+}
+.work-items .item-list .table-items,
+.work-items .item-list .table-heading {
+  /* gap: 8px; */
+  font-size: 12px;
+}
+
+.item-list .table-items {
+  position: relative;
+  margin-bottom: 16px;
+}
+.item-list .table-heading {
+  margin-bottom: 16px;
+}
+
+.item-list .table-heading th {
+  text-align: left;
+}
+
+.item-list .table-items .item-name,
+.table-heading .item-name {
+  flex-basis: 50%;
+}
+
+.table-items input,
+.table-items select {
+  padding-left: 3px;
+  margin-bottom: 0 !important;
+}
+.item-list .table-items .qty,
+.table-heading .qty {
+  flex-basis: 10%;
+  text-align: center;
+}
+.item-list .table-items .qty.delete,
+.table-heading .qty.delete {
+  display: flex;
+  align-items: center;
+  flex-basis: 8%;
+}
+.item-list .table-items .price,
+.table-heading .price {
+  flex-basis: 20%;
+  text-align: right;
+}
+.item-list .table-items .price.engineNo,
+.table-heading .price.engineNo {
+  text-align: left;
+}
+.item-list .table-items .total,
+.table-heading .total {
+  flex-basis: 20%;
+  align-self: center;
+}
+
+.table-items img {
+  top: 15px;
+  right: 0;
+  width: 12px;
+  height: 16px;
+  margin: auto;
+  align-self: center;
+  cursor: pointer;
+}
+
+.work-items .button {
+  color: #fff;
+  background-color: #252945;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.work-items .button img {
+  margin-right: 4px;
+}
+
+.invoice-content .save {
+  margin-top: 20px;
+}
+
+.invoice-content .save div {
+  flex: 1;
+}
+.invoice-content .save .right {
+  justify-content: flex-end;
+}
+
+@media screen and (min-width: 900px) {
+  .invoice-wrap {
+    left: 90px;
+  }
+  .invoice-wrap .invoice-content {
+    padding: 56px;
+  }
+  .invoice-content h1 {
+    margin-bottom: 48px;
+  }
+  .input {
+    margin-bottom: 24px;
+  }
+}

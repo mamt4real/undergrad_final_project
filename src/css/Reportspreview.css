@@ -1,0 +1,81 @@
+.reppreview {
+  width: 100%;
+  max-width: 1000px;
+  padding-top: 20px;
+}
+
+.reppreview > h2 {
+  font-size: medium;
+  text-align: center;
+}
+
+.reppreview > h2 > span {
+  color: green;
+  text-decoration: underline;
+}
+
+.reppreview > section {
+  width: 100%;
+}
+
+.reppreview section.actions {
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.reppreview .actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 8px;
+  font-size: small;
+}
+.reppreview .actions .MuiSvgIcon-root {
+  font-size: small;
+}
+.reppreview section.records {
+  height: 80vh;
+  margin: 5px auto;
+  overflow: scroll;
+}
+
+.reppreview__table {
+  width: 100%;
+  min-width: max-content;
+  border-collapse: collapse;
+  border-color: white;
+  position: relative;
+}
+
+.reppreview__table thead {
+  position: sticky;
+  top: 0;
+  right: 0;
+  background-color: var(--bg-dark);
+  /* border: solid 1px var(--bg-dark); */
+}
+.reppreview__table td,
+.reppreview__table th {
+  padding: 4px;
+}
+
+.reppreview__table td.money {
+  text-align: right;
+}
+
+@media screen and (min-width: 900px) {
+  .reppreview > h2 {
+    font-size: larger;
+  }
+  .reppreview .actions button {
+    gap: 10px;
+    padding: 10px 16px;
+    min-width: 120px;
+    min-width: 120px;
+    font-size: medium;
+  }
+  .reppreview .actions .MuiSvgIcon-root {
+    font-size: large;
+  }
+}

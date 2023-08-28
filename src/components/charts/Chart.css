@@ -1,0 +1,24 @@
+.chart {
+  /* margin: 15px 15px 0 15px; */
+  padding: 20px;
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  /* background-color: var(--bg-light); */
+}
+
+.chart.piechart {
+  height: 500px;
+  width: 100%;
+}
+.chart.barchat {
+  height: 350px;
+  width: 100%;
+  padding: 5px;
+}
+.chart.piechart > h3 {
+  margin-bottom: 0;
+}
+
+.chart__title {
+  margin-bottom: 20px;
+}

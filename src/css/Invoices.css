@@ -1,0 +1,140 @@
+.home {
+  color: white;
+}
+.home .header {
+  margin-bottom: 15px;
+}
+
+.home .header .left,
+.home .header .right {
+  flex: 1;
+}
+.home .header .right {
+  justify-content: flex-end;
+  align-items: center;
+}
+.home .header .right .button,
+.home .header .right .filter {
+  align-items: center;
+}
+
+.home .header .right .button span,
+.home .header .right .filter span {
+  font-size: 12px;
+}
+.home .header .right .filter {
+  position: relative;
+  margin-right: 40px;
+  cursor: pointer;
+}
+
+.home .header .right .button {
+  background-color: #7c5dfa;
+}
+
+.home .header .right .button img {
+  margin-right: 4px;
+  background-color: white;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.home .header .right .filter img {
+  margin-left: 12px;
+  width: 9px;
+  height: 5px;
+}
+
+.filter .filter-menu {
+  width: 120px;
+  position: absolute;
+  top: 25px;
+  list-style: none;
+  background-color: #1e2139;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.filter .filter-menu li {
+  cursor: pointer;
+  font-size: 12px;
+  padding: 10px 20px;
+}
+.filter .filter-menu li:hover {
+  color: #1e2139;
+  background-color: #fff;
+}
+
+.home .empty {
+  margin-top: 160px;
+  align-items: center;
+}
+.home .empty img {
+  width: 214px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.home .empty h3 {
+  font-size: 20px;
+  margin-top: 40px;
+}
+
+.home .empty p {
+  text-align: center;
+  max-width: 224px;
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.home .searchbar {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  align-items: flex-end;
+  margin-bottom: 40px;
+}
+.home .searchbar > .input {
+  flex: 1;
+  margin-bottom: 0;
+}
+.home .searchbar > .input input {
+  padding-left: 10px;
+}
+
+.home .searchbar > button.button {
+  padding: 12px 4px;
+  flex: 0.3;
+}
+.invoices-container {
+  max-height: 75vh;
+  overflow-y: scroll;
+  padding: 0 10px;
+  scroll-behavior: smooth;
+}
+
+.custom_scroll::-webkit-scrollbar {
+  width: 12px;
+  border-radius: 10%;
+}
+.custom_scroll::-webkit-scrollbar-track {
+  background-color: var(--bg-dark);
+}
+
+.custom_scroll::-webkit-scrollbar-thumb {
+  background-color: var(--bg-light);
+  border-radius: 6px;
+}
+
+@media screen and (max-width: 760px) {
+  .home .header.flex {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .home .header.flex .right {
+    justify-content: space-between;
+  }
+  /* .invoices-container {
+  } */
+  /* .custom_scroll::-webkit-scrollbar {
+    
+  } */
+}

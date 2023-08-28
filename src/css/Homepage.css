@@ -1,0 +1,27 @@
+.homepage {
+  background-color: #141625;
+  min-height: 100vh;
+}
+
+.homepage .app-content {
+  padding: 0 20px;
+  flex: 1;
+  position: relative;
+}
+.mobile-message {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  background-color: #141625;
+  color: white;
+}
+.mobile-message p {
+  margin-top: 16px;
+}
+
+@media screen and (min-width: 900px) {
+  .homepage {
+    flex-direction: row !important;
+  }
+}
