@@ -10,6 +10,7 @@ import '../css/EngineDetail.css'
 
 import Popup from '../components/Popup'
 import RestockForm from '../components/RestockForm'
+import { deleteOne, updateOne } from '../firebase/crud'
 
 function EngineDetail() {
   const { engineId } = useParams()
@@ -23,15 +24,15 @@ function EngineDetail() {
   useEffect(() => {
     const tmp = products.find((e) => e.id === engineId)
     if (!tmp) {
-      navigate('/admin/products')
+      return navigate('/admin/products')
     }
     setEngine(tmp)
-  }, [products, engineId])
+  }, [products, engineId, navigate])
 
   const handlePriceUpdate = (promptText, field) => {
     const newPrice = prompt(`Enter new ${promptText}`, engine[field])
     if (!newPrice || isNaN(newPrice)) return
-    db.updateOne('products', {
+    updateOne('products', {
       ...engine,
       [field]: parseFloat(newPrice),
     })
@@ -43,7 +44,7 @@ function EngineDetail() {
   }
   const handleDelete = () => {
     const effectDelete = async () => {
-      await db.deleteOne('products', engine.id)
+      await deleteOne('products', engine.id)
     }
     setShowModal({
       open: true,

@@ -9,13 +9,17 @@ import devData from '../devdata/data'
 import { db, devEnv } from './_config'
 
 /**
- * Retrieve invoices within a given date range
- * @param {String | Date} from start date
- * @param {String | Date} to end date
- * @returns {[Object]} list of Invoices
+ * This File Define functions specicif to invoices
  */
 
-const getDateRangedInvoices = async (from, to) => {
+/**
+ * Retrieve invoices within a given date range
+ * @param {string | Date} from start date
+ * @param {string | Date} to end date
+ * @returns {object[]} list of Invoices
+ */
+
+export const getDateRangedInvoices = async (from, to) => {
   if (!(from instanceof Date)) from = new Date(from)
   if (!(to instanceof Date)) to = new Date(to)
 
@@ -47,7 +51,11 @@ const getDateRangedInvoices = async (from, to) => {
   return invoices
 }
 
-const getThisYearInvoices = async () => {
+/**
+ * Retrieves all Invoices in this year
+ * @returns {object[]}
+ */
+export const getThisYearInvoices = async () => {
   if (devEnv) return devData
   const year = new Date().getFullYear()
   const dayOne = `${year}-01-01`
@@ -55,7 +63,11 @@ const getThisYearInvoices = async () => {
   return getDateRangedInvoices(dayOne, lastDay)
 }
 
-const getTodaysSales = async () => {
+/**
+ * Returns all Sales for todays date
+ * @returns {object[]}
+ */
+export const getTodaysSales = async () => {
   const d = new Date().toLocaleString('default', {
     year: 'numeric',
     month: '2-digit',
@@ -69,7 +81,12 @@ const getTodaysSales = async () => {
   return getDateRangedInvoices(today, tomorrow)
 }
 
-const getInvoiceByPhone = async (phone) => {
+/**
+ * Retrieves an Invoice by Customer's phone number
+ * @param {string} phone customer phone number
+ * @returns {object}
+ */
+export const getInvoiceByPhone = async (phone) => {
   if (devEnv) {
   }
   const q = query(collection(db, 'invoices'), where('clientPhone', '==', phone))
@@ -83,12 +100,3 @@ const getInvoiceByPhone = async (phone) => {
   )
   return invoices
 }
-
-const exports = {
-  getThisYearInvoices,
-  getTodaysSales,
-  getDateRangedInvoices,
-  getInvoiceByPhone,
-}
-
-export default exports

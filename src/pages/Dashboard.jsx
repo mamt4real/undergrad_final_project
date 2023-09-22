@@ -10,9 +10,9 @@ import {
   engineCount,
 } from '../firebase/factory'
 import { formatMoney } from '../reducer'
-
 import { useState } from 'react'
 import Loading from '../components/Loading'
+import { getThisYearInvoices } from '../firebase/invoices'
 
 function Dashboard() {
   const [loading, setLoading] = useState(true)
@@ -27,7 +27,7 @@ function Dashboard() {
     const loadDetails = async () => {
       setLoading(true)
       try {
-        const data = await db.getThisYearInvoices()
+        const data = await getThisYearInvoices()
         const transformed = transformInvoices(data)
         const monthly = monthlySales(transformed)
         const products = engineCount(transformed)

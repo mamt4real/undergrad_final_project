@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   TableBody,
   TableCell,
@@ -19,7 +19,7 @@ import UserForm from '../components/UserForm'
 import '../css/Users.css'
 import { useOutletContext } from 'react-router-dom'
 import { useStateValue } from '../StateProvider'
-import Loading from '../components/Loading'
+import { deleteOne } from '../firebase/crud'
 
 const headCells = [
   { id: 'name', label: 'Name' },
@@ -34,22 +34,12 @@ function Users() {
   const [{ staffs, user }, dispatch] = useStateValue()
   const [filter, setFilter] = useState({ fn: (items) => items })
   const setShowModal = useOutletContext()[1]
-  const [loading, setLoading] = useState(false)
   const { TableContainer, TblHead, TblPagination, recordsAfterPagination } =
     useTable(staffs, headCells, filter)
 
-  useEffect(() => {
-    if (staffs.length) return
-    setLoading(true)
-    db.getAll('users')
-      .then((data) => dispatch({ type: 'SET_STAFFS', data }))
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false))
-  }, [])
-
   const handleDelete = (staff) => {
     const effectDelete = async () => {
-      await db.deleteOne('users', staff.id)
+      await deleteOne('users', staff.id)
     }
     setShowModal({
       open: true,
@@ -81,7 +71,6 @@ function Users() {
 
   return (
     <div className='users container'>
-      {loading && <Loading />}
       <h1>Manage users</h1>
       <div className='flex' style={{ alignItems: 'center', margin: '1rem 0' }}>
         <input

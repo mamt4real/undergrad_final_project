@@ -13,6 +13,8 @@ import { formatdate, formatMoney } from '../reducer'
 import Loading from '../components/Loading'
 import Popup from '../components/Popup'
 import useReceipt from '../hooks/useReceipt'
+import { updateProductQuantities } from '../firebase/products'
+import { deleteOne, updateOne } from '../firebase/crud'
 
 function InvoicePage() {
   const { invoiceID } = useParams()
@@ -25,10 +27,10 @@ function InvoicePage() {
   const printCallback = () => {
     if (!currentInvoice.printed) {
       // update quantities reduction
-      db.updateQuantities(currentInvoice.invoiceItemList)
+      updateProductQuantities(currentInvoice.invoiceItemList)
         .then(() => {
           // update status to printed
-          db.updateOne('invoices', {
+          updateOne('invoices', {
             ...currentInvoice,
             printed: true,
             invoicePending: false,
@@ -48,7 +50,7 @@ function InvoicePage() {
               })
               dispatch({
                 type: 'SET_CURRENT_INVOICE',
-                data: updated ? updated?.id : currentInvoice.id,
+                data: updated ? updated?.id : currentInvoice?.id,
               })
             })
             .catch(console.log)
@@ -66,7 +68,7 @@ function InvoicePage() {
   useEffect(() => {
     dispatch({ type: 'SET_CURRENT_INVOICE', data: invoiceID })
     return () => dispatch({ type: 'SET_CURRENT_INVOICE', data: null })
-  }, [invoiceID])
+  }, [invoiceID, dispatch])
 
   const toggleInvoiceEdit = (id) => {
     fn(true)
@@ -77,7 +79,7 @@ function InvoicePage() {
       setSubmitting(true)
       try {
         // const docref = db.doc(db.db, 'invoices', id)
-        await db.deleteOne('invoices', id)
+        await deleteOne('invoices', id)
         dispatch({ type: 'DELETE_INVOICE', data: id })
         dispatch({ type: 'SET_CURRENT_INVOICE', data: null })
       } catch (error) {
@@ -133,17 +135,17 @@ function InvoicePage() {
         </div>
         <div className='right flex'>
           {!currentInvoice.printed &&
-            (user.id === currentInvoice.userID || user.role === 'admin') && (
+            (user?.id === currentInvoice?.userID || user?.role === 'admin') && (
               <>
                 <button
                   className='orange'
-                  onClick={() => toggleInvoiceEdit(currentInvoice.id)}
+                  onClick={() => toggleInvoiceEdit(currentInvoice?.id)}
                 >
                   Edit
                 </button>
                 <button
                   className='red'
-                  onClick={() => deleteInvoice(currentInvoice.id)}
+                  onClick={() => deleteInvoice(currentInvoice?.id)}
                 >
                   Delete
                 </button>
@@ -162,7 +164,7 @@ function InvoicePage() {
           <div className='left flex flex-column'>
             <p>
               <span>#</span>
-              {currentInvoice.id}
+              {currentInvoice?.id}
             </p>
             <p>{currentInvoice.productDescription}</p>
           </div>

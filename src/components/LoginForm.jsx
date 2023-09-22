@@ -4,6 +4,8 @@ import { Email, Lock } from '@mui/icons-material'
 import { useStateValue } from '../StateProvider'
 import { users } from '../devdata/data'
 import { useNavigate } from 'react-router-dom'
+import { signIn } from '../firebase/auth'
+import { devEnv } from '../firebase/_config'
 
 function LoginForm() {
   const [details, setDetails] = useState({ email: '', password: '' })
@@ -23,12 +25,12 @@ function LoginForm() {
     try {
       let user
       let message = 'Invalid Credentials!'
-      if (db.devEnv) {
+      if (devEnv) {
         user = users.find(
           (user) =>
             user.email === details.email && user.password === details.password
         )
-      } else [user, message] = await db.signIn(details.email, details.password)
+      } else [user, message] = await signIn(details.email, details.password)
       if (user) {
         dispatch({ type: 'SET_USER', data: user })
         localStorage.setItem('user', JSON.stringify(user))

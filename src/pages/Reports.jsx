@@ -14,6 +14,7 @@ import ChartBar from '../components/charts/ChartBar'
 import { useEffect } from 'react'
 import Loading from '../components/Loading'
 import { Link } from 'react-router-dom'
+import { getDateRangedInvoices } from '../firebase/invoices'
 
 function Reports() {
   const [{ invoices, staffs }, dispatch] = useStateValue()
@@ -34,6 +35,10 @@ function Reports() {
     usersChartData: [],
   })
 
+  const filtersChange = (e) => {
+    const { name, value } = e.target
+    setFilters({ ...filters, [name]: value })
+  }
   const updateStats = () => {
     const transformed = transformInvoices(fetchedInvoices)
     const months = Math.abs(
@@ -65,19 +70,13 @@ function Reports() {
       profitPercentage,
     })
   }
-
-  const filtersChange = (e) => {
-    const { name, value } = e.target
-    setFilters({ ...filters, [name]: value })
-  }
-
   useEffect(() => {
     updateStats()
   }, [fetchedInvoices])
 
   const fetchData = () => {
     setLoading(true)
-    db.getDateRangedInvoices(filters.dateFrom, filters.dateTo)
+    getDateRangedInvoices(filters.dateFrom, filters.dateTo)
       .then((data) => setFetched(data))
       .catch((err) => console.log(err))
       .finally(() => setLoading(false))

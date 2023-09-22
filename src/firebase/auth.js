@@ -142,4 +142,4 @@ export const updateUserPassword = async (oldpass, newPass, user) => {
 /**
  * A listenere for auth state change in the system
  */
-export const userChanged = onAuthStateChanged
+export const userChanged = (fn) => onAuthStateChanged(auth, fn)

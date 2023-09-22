@@ -8,6 +8,8 @@ import { useStateValue } from '../StateProvider'
 import Invoice from '../components/Invoice'
 import Loading from '../components/Loading'
 import { useOutletContext } from 'react-router-dom'
+import { getAll } from '../firebase/crud'
+import { getInvoiceByPhone } from '../firebase/invoices'
 
 function Invoices() {
   const [{ invoices }, dispatch] = useStateValue()
@@ -24,7 +26,7 @@ function Invoices() {
     let isCanceled = false
     setLoading(true)
     // db.getTodaysSales()
-    db.getAll('invoices')
+    getAll('invoices')
       .then((invoices) => {
         if (!isCanceled) dispatch({ type: 'SET_INVOICES', data: invoices })
       })
@@ -35,7 +37,7 @@ function Invoices() {
       isCanceled = true
       setLoading(false)
     }
-  }, [])
+  }, [dispatch, invoices])
 
   const handleFilter = (e) => {
     const text = e.target.innerText
@@ -45,7 +47,7 @@ function Invoices() {
 
   const handleSearch = (e) => {
     setLoading(true)
-    db.getInvoiceByPhone(phone)
+    getInvoiceByPhone(phone)
       .then((data) => {
         dispatch({ type: 'SET_SEARCHED', data })
         setDisplayed(data)
