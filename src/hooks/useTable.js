@@ -118,6 +118,7 @@ function useTable(records, headCols, filter) {
           <TableCell
             key={hd.id}
             sortDirection={orderBy === hd.id ? order : false}
+            padding='1'
           >
             {hd.disableSort ? (
               hd.label

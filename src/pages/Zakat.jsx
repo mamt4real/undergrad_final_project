@@ -1,14 +1,58 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Loading from '../components/Loading'
 import { CalendarToday } from '@mui/icons-material'
-import { Typography } from '@mui/material'
-import { formatMoney, formatdate } from '../reducer'
+import {
+  IconButton,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Tooltip,
+  Typography,
+} from '@mui/material'
+import { formatMoney } from '../reducer'
 import { useStateValue } from '../StateProvider'
-import { dayDifference, toDdMmmYy } from '../utils/dateFunctions'
+import { cleanDate, dayDifference, toDdMmmYy } from '../utils/dateFunctions'
+import useTable from '../hooks/useTable'
+import { getAll } from '../firebase/crud'
+import { toNDigits } from '../utils/helpers'
+
+const headCells = [
+  { id: 'year', label: 'Year' },
+  { id: 'openingBalance', label: 'Opeining Bal' },
+  { id: 'closingBalance', label: 'Closinging Bal' },
+  { id: 'nisaab', label: 'Nisaab' },
+  { id: 'paymentStatus', label: 'Payment Status' },
+]
 
 function Zakat() {
   const [loading, setLoading] = useState(false)
+  const [zakatyears, setZakatyears] = useState([])
+  const [filter, setFilter] = useState({ fn: (items) => items })
+
   const { activeYear: currentYear } = useStateValue()[0]
+  const { TableContainer, TblHead, TblPagination, recordsAfterPagination } =
+    useTable(zakatyears, headCells, filter)
+
+  useEffect(() => {
+    let isCanceled = false
+    getAll('zakatyears').then((years) => !isCanceled && setZakatyears(years))
+    return () => {
+      isCanceled = true
+    }
+  }, [])
+
+  const getYear = (year) => {
+    const start = cleanDate(year.beginDate)
+    const stop = cleanDate(year.endDate)
+    return `${toNDigits(
+      start.getMonth() + 1,
+      2
+    )}/${start.getFullYear()} - ${toNDigits(
+      stop.getMonth() + 1,
+      2
+    )}/${stop.getFullYear()}`
+  }
 
   return (
     <div className='zakat container dashboard reports'>
@@ -99,8 +143,26 @@ function Zakat() {
         </div>
         <button className='button dark-purple'>Calculate</button>
       </section>
-      <section className='right flex flex-column'>
-        This section would show details of previous Zakat Years
+      <section
+        className='right flex flex-column'
+        style={{ alignItems: 'center' }}
+      >
+        <h3>Zakat History</h3>
+        <TableContainer>
+          <TblHead />
+          <TableBody>
+            {recordsAfterPagination().map((y, i) => (
+              <TableRow key={i + 1 + y.id}>
+                <TableCell>{getYear(y)}</TableCell>
+                <TableCell>{formatMoney(y.openingBalance)}</TableCell>
+                <TableCell>{formatMoney(y.closingBalance)}</TableCell>
+                <TableCell>{formatMoney(y.nisab)}</TableCell>
+                <TableCell>{y.paymentStatus}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableContainer>
+        <TblPagination />
       </section>
     </div>
   )
