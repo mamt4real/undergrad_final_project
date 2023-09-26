@@ -78,7 +78,6 @@ function InvoicePage() {
     const effectDelete = async () => {
       setSubmitting(true)
       try {
-        // const docref = db.doc(db.db, 'invoices', id)
         await deleteOne('invoices', id)
         dispatch({ type: 'DELETE_INVOICE', data: id })
         dispatch({ type: 'SET_CURRENT_INVOICE', data: null })

@@ -7,6 +7,7 @@ import {
 } from 'firebase/firestore/lite'
 import devData from '../devdata/data'
 import { db, devEnv } from './_config'
+import { getAll } from './crud'
 
 /**
  * This File Define functions specicif to invoices
@@ -88,6 +89,8 @@ export const getTodaysSales = async () => {
  */
 export const getInvoiceByPhone = async (phone) => {
   if (devEnv) {
+    const invoices = await getAll('invoices')
+    return invoices.find((i) => i.clientPhone === phone)
   }
   const q = query(collection(db, 'invoices'), where('clientPhone', '==', phone))
   const docsSnapshot = await getDocs(q)

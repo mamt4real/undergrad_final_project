@@ -59,7 +59,7 @@
     flex-direction: column;
   }
   .navigation .links .navlink {
-    padding: 15px;
+    padding: 12px;
     margin: 10px auto;
   }
   .navigation .navlink.active {
@@ -70,8 +70,8 @@
     height: 35px;
   }
   .navigation .logout_btn.MuiIconButton-root {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     margin: 10px auto;
   }
   .navigation .brand {

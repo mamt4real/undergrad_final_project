@@ -12,7 +12,8 @@ import { Invoice } from '../models'
 
 const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
   const navigate = useNavigate()
-  const [{ currentInvoice, user, products }, dispatch] = useStateValue()
+  const [{ currentInvoice, user, products, activeYear }, dispatch] =
+    useStateValue()
   const [invoice, setInvoice] = useState(currentInvoice || { ...Invoice })
   const [submitting, setSubmitting] = useState(false)
 
@@ -94,7 +95,10 @@ const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
     try {
       const newInvoice = await fn('invoices', {
         ...invoice,
-        ...(!!!currentInvoice && { userID: user?.id }),
+        ...(!!!currentInvoice && {
+          userID: user?.id,
+          zakatYearID: activeYear?.id,
+        }),
       })
       dispatch({
         type: `${currentInvoice ? 'UPDATE' : 'ADD'}_INVOICE`,

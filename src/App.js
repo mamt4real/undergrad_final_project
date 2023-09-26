@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Profile from './pages/Profile'
 import ReportsPreview from './pages/ReportsPreview'
 import EngineDetail from './pages/EngineDetail'
+import Zakat from './pages/Zakat'
 
 function App() {
   return (
@@ -59,14 +60,7 @@ function App() {
               <Route path='reports' element={<Reports />} />
               <Route path='reports/preview' element={<ReportsPreview />} />
               <Route path='users' element={<Users />} />
-              <Route
-                path='zakat'
-                element={
-                  <div className='page__content'>
-                    <h1>Page Not yet Implemented</h1>
-                  </div>
-                }
-              />
+              <Route path='zakat' element={<Zakat />} />
             </Route>
           </Route>
           <Route

@@ -82,14 +82,17 @@ button,
 .container {
   width: 100%;
   padding: 0;
-  max-width: 850px;
+  padding-bottom: 1rem;
+  max-width: 1200px;
+  max-height: 100vh;
+  overflow-y: scroll;
   margin: 0 auto;
   position: relative;
 }
 @media screen and (min-width: 900px) {
   .container {
     padding: 40px 10px;
-    padding-top: 72px;
+    padding-top: 60px;
   }
   button,
   .button {
@@ -149,12 +152,14 @@ button,
   background-color: #dfe3fa;
 }
 /* hide scrollbar for chrome */
-.hideScrollBar::-webkit-scrollbar {
+.hideScrollBar::-webkit-scrollbar,
+.container::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.hideScrollBar {
+.hideScrollBar,
+.container {
   -ms-overflow-style: none; /*IE and Edge */
   scrollbar-width: none; /*Firefox */
 }

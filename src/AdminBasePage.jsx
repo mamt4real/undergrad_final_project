@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Outlet, useOutletContext } from 'react-router-dom'
 import { useStateValue } from './StateProvider'
 import { getAll } from './firebase/crud'
+import { getActiveYear } from './firebase/zakatyears'
 
 function AdminBasePage() {
   // Load Some admin level data
@@ -12,7 +13,11 @@ function AdminBasePage() {
     let isCanceled = false
     const loadData = async () => {
       const data = await getAll('users')
-      if (!isCanceled) dispatch({ type: 'SET_STAFFS', data })
+      const activeYear = await getActiveYear()
+      if (!isCanceled) {
+        dispatch({ type: 'SET_STAFFS', data })
+        dispatch({ type: 'SET_ACTIVE_YEAR', data: activeYear })
+      }
     }
     loadData()
     return () => {
