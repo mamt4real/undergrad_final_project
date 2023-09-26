@@ -1,4 +1,4 @@
-import devData, { users, products } from '../devdata/data'
+import devData, { users, products, zakatYears } from '../devdata/data'
 import {
   collection,
   getDocs,
@@ -30,7 +30,7 @@ export const getAll = async (colname) => {
       case 'products':
         return products
       case 'zakatyears':
-        return []
+        return zakatYears
       default:
         return []
     }
@@ -55,7 +55,24 @@ export const getAll = async (colname) => {
  */
 export const getOne = async (colname, id) => {
   if (devEnv) {
-    return devData.find((x) => x.id === id)
+    let data
+    switch (colname) {
+      case 'invoices':
+        data = devData
+        break
+      case 'products':
+        data = products
+        break
+      case 'users':
+        data = users
+        break
+      case 'zakatyears':
+        data = zakatYears
+        break
+      default:
+        data = []
+    }
+    return data.find((x) => x.id === id)
   }
   const docRef = doc(db, colname, id)
   const docSnapshot = await getDoc(docRef)
@@ -69,6 +86,7 @@ export const getOne = async (colname, id) => {
  * @returns
  */
 export const createOne = async (colname, data) => {
+  data.dateCreated = new Date()
   if (devEnv) {
     const newDoc = { ...data, id: uid() }
     return newDoc
@@ -95,6 +113,12 @@ export const updateOne = async (colname, docData) => {
       case 'products':
         data = products
         break
+      case 'users':
+        data = users
+        break
+      case 'zakatyears':
+        data = zakatYears
+        break
       default:
         data = []
     }
@@ -119,8 +143,25 @@ export const updateOne = async (colname, docData) => {
  */
 export const deleteOne = async (colname, id) => {
   if (devEnv) {
-    const index = devData.findIndex((x) => x.id === id)
-    devData.splice(index, 1)
+    let data
+    switch (colname) {
+      case 'invoices':
+        data = devData
+        break
+      case 'products':
+        data = products
+        break
+      case 'users':
+        data = users
+        break
+      case 'zakatyears':
+        data = zakatYears
+        break
+      default:
+        data = []
+    }
+    const index = data.findIndex((x) => x.id === id)
+    data.splice(index, 1)
     return
   }
   const docRef = doc(db, colname, id)

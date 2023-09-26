@@ -3,6 +3,7 @@ export const initialState = {
   products: [],
   invoicesLoaded: null,
   currentInvoice: null,
+  activeYear: null,
   invoiceModal: null,
   searched: [],
   reports: [],
@@ -149,6 +150,11 @@ export const reducer = (state, action) => {
         user: { ...state.user, [action.key]: action.value },
       }
     }
+    case 'SET_ACTIVE_YEAR':
+      return {
+        ...state,
+        activeYear: action.data,
+      }
     case 'SET_TOKEN':
       return {
         ...state,

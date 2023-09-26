@@ -1,5 +1,5 @@
 import { uid } from 'uid'
-
+import { oneDay, oneMonth } from '../utils/dateFunctions'
 // Dummy Users
 export const users = Array(4)
   .fill(null)
@@ -25,9 +25,40 @@ export const products = temp.map((name) => {
   }
 })
 
-// Dummy Receipts
+// Dummy Zakat Years
+export const zakatYears = [
+  {
+    id: uid(6),
+    openingBalance: Math.random() * 1_500_000,
+    closingBalance: null,
+    nisab: 700_000 + Math.random() * 100_000,
+    beginDate: new Date(Date.now() - oneMonth),
+    endDate: new Date(Date.now() + 11 * oneMonth),
+    datePaid: null,
+    amountDue: null,
+    status: 'active',
+    paymentStatus: 'not-paid',
+    dateCreated: new Date(),
+  },
+  {
+    id: uid(6),
+    openingBalance: Math.random() * 1_500_000,
+    nisab: 700_000 + Math.random() * 100_000,
+    beginDate: new Date(Date.now() - 13 * oneMonth),
+    endDate: new Date(Date.now() - oneMonth),
+    datePaid: new Date(Date.now() - oneMonth + oneDay),
+    closingBalance: 750_000 + Math.random() * 1_000_000 - 500_000,
+    amountDue: (1 / 40) * Math.random() * 1_500_000,
+    status: 'inactive',
+    paymentStatus: 'paid',
+    dateCreated: new Date(),
+  },
+]
+
+// Dummy RInvoices
 const data = []
-for (let i = 0; i < 15; i++)
+for (let i = 0; i < 15; i++) {
+  let invoiceTotal = 0
   data.push({
     id: uid(6),
     billerStreetAddress: 'Street Address' + (i + 1),
@@ -35,7 +66,7 @@ for (let i = 0; i < 15; i++)
     billerZipCode: 'Zip Code' + (i + 1),
     billerCountry: 'Country' + (i + 1),
     clientName: 'Name' + (i + 1),
-    clientPhone: Math.floor(Math.random() * 100000000000),
+    clientPhone: Math.floor(Math.random() * 100_000_000_000),
     clientEmail: 'email' + (i + 1) + '@example.com',
     clientAddress: 'strret address' + (i + 1),
     clientCity: 'client City' + (i + 1),
@@ -58,6 +89,7 @@ for (let i = 0; i < 15; i++)
       .fill()
       .map((_, i) => {
         const engine = products[Math.floor(Math.random() * products.length)]
+        invoiceTotal += engine.basePrice * (i + 1)
         return {
           itemName: engine.name,
           engineNo: Math.floor(Math.random() * 10000000),
@@ -67,9 +99,10 @@ for (let i = 0; i < 15; i++)
           total: engine.basePrice * (i + 1),
         }
       }),
-    invoiceTotal: 0,
+    invoiceTotal,
     userID: i % users.length,
   })
+}
 
 // Dummy chart data
 export const userSalesData = [
