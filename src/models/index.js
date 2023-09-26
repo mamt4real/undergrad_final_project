@@ -20,4 +20,5 @@ export const Invoice = {
   invoiceTotal: 0,
   printed: false,
   userID: null,
+  zakatYearID: null,
 }
