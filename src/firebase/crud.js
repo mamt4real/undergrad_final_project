@@ -89,6 +89,22 @@ export const createOne = async (colname, data) => {
   data.dateCreated = new Date()
   if (devEnv) {
     const newDoc = { ...data, id: uid() }
+    switch (colname) {
+      case 'invoices':
+        devData.push(newDoc)
+        break
+      case 'products':
+        products.push(newDoc)
+        break
+      case 'users':
+        users.push(newDoc)
+        break
+      case 'zakatyears':
+        zakatYears.push(newDoc)
+        break
+      default:
+        break
+    }
     return newDoc
   }
   const colRef = collection(db, colname)

@@ -58,7 +58,7 @@ button.login_btn:hover {
     width: 90%;
   }
   .loginform .input label {
-    font-size: large;
+    font-size: small;
   }
   .loginform .input input {
     font-size: large;

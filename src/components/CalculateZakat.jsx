@@ -31,7 +31,7 @@ function CalculateZakat({ zakatYear, netAssets }) {
   }
 
   return (
-    <div>
+    <div className='calculatezakat'>
       <Popup
         title={`Calculate Zakat for ${getYearRange(zakatYear)}`}
         open={openPopup}

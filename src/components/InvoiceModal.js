@@ -106,7 +106,7 @@ const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
       })
       setSubmitting(false)
       closeFunction()
-      navigate(`/invoices/${newInvoice?.id}`)
+      navigate(`/invoices/${newInvoice?.id || currentInvoice?.id}`)
     } catch (error) {
       console.log(error)
       alert(error.message)
@@ -269,6 +269,13 @@ const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
             </div>
           ) : (
             <div className='right flex'>
+              <button
+                className='dark-purple'
+                type='submit'
+                onClick={() => setInvoice({ ...invoice, invoiceDraft: true })}
+              >
+                Save Draft
+              </button>
               <button
                 className='purple'
                 type='submit'

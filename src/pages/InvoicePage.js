@@ -24,36 +24,35 @@ function InvoicePage() {
   const [submitting, setSubmitting] = useState(false)
   const [fn, setShowModal] = useOutletContext()
 
+  const updateStatus = (status, printed = false) => {
+    updateOne('invoices', {
+      ...currentInvoice,
+      ...(printed ? { printed } : {}),
+      invoicePending: false,
+      invoiceDraft: false,
+      invoicePaid: false,
+      [`invoice${status}`]: true,
+    })
+      .then((updated) => {
+        dispatch({
+          type: 'UPDATE_INVOICE',
+          data: updated,
+        })
+        dispatch({
+          type: 'SET_CURRENT_INVOICE',
+          data: updated ? updated.id : currentInvoice?.id,
+        })
+      })
+      .catch(console.log)
+  }
+
   const printCallback = () => {
     if (!currentInvoice.printed) {
       // update quantities reduction
       updateProductQuantities(currentInvoice.invoiceItemList)
         .then(() => {
           // update status to printed
-          updateOne('invoices', {
-            ...currentInvoice,
-            printed: true,
-            invoicePending: false,
-            invoiceDraft: false,
-            invoicePaid: true,
-          })
-            .then((updated) => {
-              dispatch({
-                type: 'UPDATE_INVOICE',
-                data: {
-                  ...currentInvoice,
-                  printed: true,
-                  invoicePending: false,
-                  invoiceDraft: false,
-                  invoicePaid: true,
-                },
-              })
-              dispatch({
-                type: 'SET_CURRENT_INVOICE',
-                data: updated ? updated?.id : currentInvoice?.id,
-              })
-            })
-            .catch(console.log)
+          updateStatus('Paid', true)
         })
         .catch(console.log)
     }
@@ -150,9 +149,21 @@ function InvoicePage() {
                 </button>
               </>
             )}
-          <button className='green' onClick={handlePrint}>
-            Print
-          </button>
+          {currentInvoice?.invoicePending && (
+            <button className='green' onClick={() => updateStatus('Paid')}>
+              Mark as Paid
+            </button>
+          )}
+          {currentInvoice?.invoiceDraft && (
+            <button className='green' onClick={() => updateStatus('Pending')}>
+              Mark as Pending
+            </button>
+          )}
+          {currentInvoice?.invoicePaid && (
+            <button className='green' onClick={handlePrint}>
+              Print
+            </button>
+          )}
         </div>
       </div>
 

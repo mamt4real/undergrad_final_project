@@ -37,7 +37,7 @@ export const getZakatYearsInvoices = async (id) => {
 
   if (devEnv) {
     invoices = (await getAll('invoices')).filter(
-      (inv) => inv.zakatYearID === id
+      (inv) => inv.zakatYearID === id && !inv.invoiceDraft
     )
   } else {
     const q = query(collection(db, 'invoices'), where('zakatYearID', '==', id))
