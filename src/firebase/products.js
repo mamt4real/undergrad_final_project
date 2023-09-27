@@ -8,6 +8,7 @@ import {
 } from 'firebase/firestore/lite'
 import { products } from '../devdata/data'
 import { db, devEnv } from './_config'
+import { getAll } from './crud'
 
 /**
  * This file defines specific functions related to products collection
@@ -53,4 +54,17 @@ export const updateProductQuantities = async (items) => {
     updates.push(updateDoc(q, update))
   })
   await Promise.all(updates)
+}
+
+/**
+ * Returns the Current Assets Value in Stock
+ * @returns {Promise<number>}
+ */
+export const getCurrentAssetsValue = async () => {
+  const products = await getAll('products')
+
+  return products.reduce(
+    (subtotal, p) => subtotal + p.costPrice * p.quantity,
+    0
+  )
 }

@@ -29,7 +29,7 @@ export const products = temp.map((name) => {
 export const zakatYears = [
   {
     id: uid(6),
-    openingBalance: Math.random() * 1_500_000,
+    openingBalance: 1_500_000 - Math.random() * 700_000,
     closingBalance: null,
     nisab: 700_000 + Math.random() * 100_000,
     beginDate: new Date(Date.now() - oneMonth),
@@ -42,7 +42,7 @@ export const zakatYears = [
   },
   {
     id: uid(6),
-    openingBalance: Math.random() * 1_500_000,
+    openingBalance: 1_500_000 - Math.random() * 700_000,
     nisab: 700_000 + Math.random() * 100_000,
     beginDate: new Date(Date.now() - 13 * oneMonth),
     endDate: new Date(Date.now() - oneMonth),
@@ -56,53 +56,55 @@ export const zakatYears = [
 ]
 
 // Dummy RInvoices
-const data = []
-for (let i = 0; i < 15; i++) {
-  let invoiceTotal = 0
-  data.push({
-    id: uid(6),
-    billerStreetAddress: 'Street Address' + (i + 1),
-    billerCity: 'City' + (i + 1),
-    billerZipCode: 'Zip Code' + (i + 1),
-    billerCountry: 'Country' + (i + 1),
-    clientName: 'Name' + (i + 1),
-    clientPhone: Math.floor(Math.random() * 100_000_000_000),
-    clientEmail: 'email' + (i + 1) + '@example.com',
-    clientAddress: 'strret address' + (i + 1),
-    clientCity: 'client City' + (i + 1),
-    clientZipCode: 'zip code' + (i + 1),
-    clientCountry: 'client country ' + (i + 1),
-    invoiceDateUnix: '',
-    invoiceDate: new Date(
-      2022,
-      Math.round(Math.random() * 12),
-      Math.round(Math.random() * 25)
-    ),
-    paymentTerms: 'some terms',
-    paymentDueDate: new Date(),
-    paymentDueDateUnix: new Date(Date.now() + (i + 1) * 86400),
-    productDescription: '',
-    invoicePending: !!(i % 2),
-    invoiceDraft: '',
-    invoicePaid: !(i % 2),
-    invoiceItemList: Array(i + 1)
-      .fill()
-      .map((_, i) => {
-        const engine = products[Math.floor(Math.random() * products.length)]
-        invoiceTotal += engine.basePrice * (i + 1)
-        return {
-          itemName: engine.name,
-          engineNo: Math.floor(Math.random() * 10000000),
-          qty: i + 1,
-          price: engine.basePrice,
-          cost: engine.costPrice,
-          total: engine.basePrice * (i + 1),
-        }
-      }),
-    invoiceTotal,
-    userID: i % users.length,
+const data = Array(15)
+  .fill(null)
+  .map((_, i) => {
+    let invoiceTotal = 0
+    return {
+      id: uid(6),
+      billerStreetAddress: 'Street Address' + (i + 1),
+      billerCity: 'City' + (i + 1),
+      billerZipCode: 'Zip Code' + (i + 1),
+      billerCountry: 'Country' + (i + 1),
+      clientName: 'Name' + (i + 1),
+      clientPhone: Math.floor(Math.random() * 100_000_000_000),
+      clientEmail: 'email' + (i + 1) + '@example.com',
+      clientAddress: 'strret address' + (i + 1),
+      clientCity: 'client City' + (i + 1),
+      clientZipCode: 'zip code' + (i + 1),
+      clientCountry: 'client country ' + (i + 1),
+      invoiceDateUnix: '',
+      invoiceDate: new Date(
+        i < 8 ? 2022 : 2023,
+        Math.round(Math.random() * 12),
+        Math.round(Math.random() * 25)
+      ),
+      paymentTerms: 'some terms',
+      paymentDueDate: new Date(),
+      paymentDueDateUnix: new Date(Date.now() + (i + 1) * 86400),
+      productDescription: '',
+      invoicePending: !!(i % 2),
+      invoiceDraft: '',
+      invoicePaid: !(i % 2),
+      invoiceItemList: Array(i + 1)
+        .fill()
+        .map((_, i) => {
+          const engine = products[Math.floor(Math.random() * products.length)]
+          invoiceTotal += engine.basePrice * (i + 1)
+          return {
+            itemName: engine.name,
+            engineNo: Math.floor(Math.random() * 10000000),
+            qty: i + 1,
+            price: engine.basePrice,
+            cost: engine.costPrice,
+            total: engine.basePrice * (i + 1),
+          }
+        }),
+      invoiceTotal,
+      userID: i % users.length,
+      zakatYearID: zakatYears[i < 8 ? 1 : 0].id,
+    }
   })
-}
 
 // Dummy chart data
 export const userSalesData = [

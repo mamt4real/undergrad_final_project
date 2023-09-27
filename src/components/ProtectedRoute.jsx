@@ -12,8 +12,9 @@ function ProtectedRoute({ children, restrictedTo = [], redirect = '/' }) {
   const [loggedUser, setLoggedUser] = useState(auth.currentUser)
 
   useEffect(() => {
+    let isCanceled = false
     const unsubscribe = userChanged((user) => {
-      if (user) {
+      if (user && !isCanceled) {
         setLoggedUser(user)
         if (!user)
           getOne('users', loggedUser.id)
@@ -22,7 +23,10 @@ function ProtectedRoute({ children, restrictedTo = [], redirect = '/' }) {
       }
     })
 
-    return () => unsubscribe()
+    return () => {
+      isCanceled = true
+      unsubscribe()
+    }
   }, [loggedUser, user, dispatch])
 
   if (!loggedUser) {

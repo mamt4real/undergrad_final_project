@@ -79,11 +79,15 @@ button,
   flex-direction: column;
 }
 
+.jc-space-between {
+  justify-content: space-between;
+}
+
 .container {
   width: 100%;
   padding: 0;
   padding-bottom: 1rem;
-  max-width: 1200px;
+  max-width: 1000px;
   max-height: 100vh;
   overflow-y: scroll;
   margin: 0 auto;

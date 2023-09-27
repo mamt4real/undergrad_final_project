@@ -1,3 +1,6 @@
+import Invoices from '../devdata/data'
+import { cleanDate } from '../utils/dateFunctions'
+
 /**
  * gets the monthname of a date
  * @param {Date} dt
@@ -45,22 +48,19 @@ const groupBy = (data, key) => {
 
 /**
  * unwind Invoices by there itemList
- * @param {[Object]} invoices List of invoices
+ * @param {(typeof Invoices)} invoices List of invoices
  * @returns {[Object]} list of unwind invoice
  */
 export const transformInvoices = (invoices) => {
   const transformed = []
+
   invoices.forEach((inv) => {
     inv.invoiceItemList.forEach((item, i) => {
       transformed.push({
         id: inv.id + i,
         userID: inv.userID,
-        date: inv.invoiceDate?.hasOwnProperty('seconds')
-          ? new Date(
-              inv.invoiceDate?.seconds * 1000 +
-                inv.invoiceDate?.nanoseconds / 1000000
-            )
-          : new Date(inv.invoiceDate),
+        zakatYearID: inv.zakatYearID,
+        date: cleanDate(inv.invoiceDate),
         ...item,
       })
     })

@@ -15,7 +15,14 @@ import { useStateValue } from '../StateProvider'
 import { cleanDate, dayDifference, toDdMmmYy } from '../utils/dateFunctions'
 import useTable from '../hooks/useTable'
 import { getAll } from '../firebase/crud'
-import { toNDigits } from '../utils/helpers'
+import { getYearRange, toNDigits } from '../utils/helpers'
+import {
+  getEstimatedAmountDue,
+  getZakatYearsSales,
+} from '../firebase/zakatyears'
+import { ZakatYear } from '../models'
+import { getCurrentAssetsValue } from '../firebase/products'
+import CalculateZakat from '../components/CalculateZakat'
 
 const headCells = [
   { id: 'year', label: 'Year' },
@@ -29,30 +36,31 @@ function Zakat() {
   const [loading, setLoading] = useState(false)
   const [zakatyears, setZakatyears] = useState([])
   const [filter, setFilter] = useState({ fn: (items) => items })
+  const [currentYear, setCurrentYear] = useState(ZakatYear)
+  const [yearSales, setYearSales] = useState(0)
+  const [yearDueEst, setYearDueEst] = useState(0)
+  const [assetInStock, setAssetsInStock] = useState(0)
+  const { activeYear } = useStateValue()[0]
 
-  const { activeYear: currentYear } = useStateValue()[0]
   const { TableContainer, TblHead, TblPagination, recordsAfterPagination } =
     useTable(zakatyears, headCells, filter)
 
   useEffect(() => {
     let isCanceled = false
     getAll('zakatyears').then((years) => !isCanceled && setZakatyears(years))
+    getCurrentAssetsValue().then(
+      (value) => !isCanceled && setAssetsInStock(value)
+    )
+    setCurrentYear(activeYear)
     return () => {
       isCanceled = true
     }
-  }, [])
+  }, [activeYear])
 
-  const getYear = (year) => {
-    const start = cleanDate(year.beginDate)
-    const stop = cleanDate(year.endDate)
-    return `${toNDigits(
-      start.getMonth() + 1,
-      2
-    )}/${start.getFullYear()} - ${toNDigits(
-      stop.getMonth() + 1,
-      2
-    )}/${stop.getFullYear()}`
-  }
+  useEffect(() => {
+    getZakatYearsSales(currentYear?.id).then(setYearSales)
+    getEstimatedAmountDue(currentYear).then(setYearDueEst)
+  }, [currentYear])
 
   return (
     <div className='zakat container dashboard reports'>
@@ -61,37 +69,35 @@ function Zakat() {
         {/* Top Level Info  */}
         <h3>Zakat Year</h3>
         <div className='filter_container'>
-          <div className='flex'>
+          <div className='flex jc-space-between'>
             <div
               className={`status-button flex ${
-                currentYear.status === 'active' ? 'paid' : 'draft'
+                currentYear?.status === 'active' ? 'paid' : 'draft'
               }`}
             >
-              <span>{currentYear.status}</span>
+              <span>{currentYear?.status}</span>
             </div>
 
             <div
               className={`status-button flex ${
-                currentYear.paymentStatus === 'paid' ? 'paid' : 'draft'
+                currentYear?.paymentStatus === 'paid' ? 'paid' : 'draft'
               }`}
             >
-              <span>{currentYear.paymentStatus}</span>
+              <span>{currentYear?.paymentStatus}</span>
             </div>
           </div>
-          <div className='flex'>
+          <div className='flex jc-space-between'>
             <div className='input flex flex-column'>
               <label htmlFor='dateFrom'>
                 <CalendarToday />
-                From:
+                {toDdMmmYy(currentYear?.beginDate)}
               </label>
-              {toDdMmmYy(currentYear.beginDate)}
             </div>
             <div className='input flex flex-column'>
               <label htmlFor='dateTo'>
                 <CalendarToday />
-                To:
+                {toDdMmmYy(currentYear?.endDate)}
               </label>
-              {toDdMmmYy(currentYear.endDate)}
             </div>
           </div>
         </div>
@@ -103,7 +109,7 @@ function Zakat() {
               Opening Balance
             </Typography>
             <Typography variant='subtitle' className='money'>
-              {formatMoney(currentYear.openingBalance)}
+              {formatMoney(currentYear?.openingBalance)}
             </Typography>
           </div>
           <div className='metric'>
@@ -111,15 +117,23 @@ function Zakat() {
               Opening Nisaab
             </Typography>
             <Typography variant='subtitle' className='money'>
-              {formatMoney(currentYear.nisab)}
+              {formatMoney(currentYear?.nisab)}
             </Typography>
           </div>
           <div className='metric'>
             <Typography variant='title' className='key'>
-              Current Balance
+              Year Sales
             </Typography>
             <Typography variant='subtitle' className='money'>
-              {formatMoney(currentYear.openingBalance)}
+              {formatMoney(yearSales)}
+            </Typography>
+          </div>
+          <div className='metric'>
+            <Typography variant='title' className='key'>
+              Assets In Stock
+            </Typography>
+            <Typography variant='subtitle' className='money'>
+              {formatMoney(assetInStock)}
             </Typography>
           </div>
           <div className='metric'>
@@ -127,7 +141,7 @@ function Zakat() {
               Due in (Days)
             </Typography>
             <Typography variant='subtitle' className='money'>
-              {dayDifference(new Date(), currentYear.endDate)}
+              {dayDifference(new Date(), currentYear?.endDate)}
             </Typography>
           </div>
           <div className='metric'>
@@ -135,13 +149,17 @@ function Zakat() {
               Amount Due (Est.)
             </Typography>
             <Typography variant='subtitle' className='money'>
-              {currentYear.openingBalance >= currentYear.nisab
-                ? formatMoney(currentYear.averageMonthly)
+              {yearSales >= currentYear?.nisab
+                ? formatMoney(yearDueEst)
                 : 'N/A'}
             </Typography>
           </div>
         </div>
-        <button className='button dark-purple'>Calculate</button>
+        <CalculateZakat
+          zakatYear={currentYear}
+          netAssets={yearSales + assetInStock}
+        />
+        {/* <button className='button dark-purple'>Calculate</button> */}
       </section>
       <section
         className='right flex flex-column'
@@ -153,7 +171,7 @@ function Zakat() {
           <TableBody>
             {recordsAfterPagination().map((y, i) => (
               <TableRow key={i + 1 + y.id}>
-                <TableCell>{getYear(y)}</TableCell>
+                <TableCell>{getYearRange(y)}</TableCell>
                 <TableCell>{formatMoney(y.openingBalance)}</TableCell>
                 <TableCell>{formatMoney(y.closingBalance)}</TableCell>
                 <TableCell>{formatMoney(y.nisab)}</TableCell>

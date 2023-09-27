@@ -12,13 +12,13 @@ import { uid } from 'uid'
 import { db, devEnv } from './_config'
 
 /**
- * This file Defgines the crud operations for collections
+ * This file Defines the crud operations for collections
  */
 
 /**
  * Retrieve all documents from a collection
  * @param {"invoices" | "users" | "products" | "zakatyears"} colname
- * @returns
+ * @returns {Promise<any[]>}
  */
 export const getAll = async (colname) => {
   if (devEnv) {
