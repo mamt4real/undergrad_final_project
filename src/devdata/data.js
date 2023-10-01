@@ -44,6 +44,7 @@ export const zakatYears = [
     id: uid(6),
     openingBalance: 1_500_000 - Math.random() * 700_000,
     nisab: 700_000 + Math.random() * 100_000,
+    closingNisab: 700_000 + Math.random() * 100_000,
     beginDate: new Date(Date.now() - 13 * oneMonth),
     endDate: new Date(Date.now() - oneMonth),
     datePaid: new Date(Date.now() - oneMonth + oneDay),

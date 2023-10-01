@@ -54,6 +54,10 @@ export const ZakatYear = {
    */
   closingBalance: 0,
   /**
+   * Nisaab as at
+   */
+  closingNisaab: 0,
+  /**
    * Amount Due for The Year (to be calculated at the end of the Year)
    */
   amountDue: 0,

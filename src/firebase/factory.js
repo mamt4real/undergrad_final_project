@@ -13,7 +13,9 @@ const month = (dt) => {
   }
   return dt.toLocaleString('default', { month: 'short' })
 }
-
+/**
+ * Sorted Months in MMM format
+ */
 const sortedMonths = [
   'Jan',
   'Feb',
@@ -68,8 +70,6 @@ export const transformInvoices = (invoices) => {
   return transformed
 }
 
-export const userSales = (transformed) => {}
-
 /**
  * Returns sales grouped by months
  * @param {Array} transformed
@@ -91,6 +91,11 @@ export const monthlySales = (transformed) => {
   return temp
 }
 
+/**
+ * Calculates Quantities of Products
+ * @param {any[]} transformed Tansformed Invoices
+ * @returns {any[]}
+ */
 export const engineCount = (transformed) => {
   const engineGroups = groupBy(transformed, (obj) => obj.itemName)
   const temp = []
@@ -104,6 +109,12 @@ export const engineCount = (transformed) => {
   return temp
 }
 
+/**
+ * Calculates Users Sales
+ * @param {any[]} transformed
+ * @param {any[]} users
+ * @returns {any[]}
+ */
 export const salesByUser = (transformed, users) => {
   const userGroups = groupBy(transformed, (obj) => obj.userID)
   const temp = []
