@@ -7,10 +7,10 @@ import {
 } from 'firebase/firestore/lite'
 import devData from '../devdata/data'
 import { db, devEnv } from './_config'
-import { getAll } from './crud'
+import { getAll, updateOne } from './crud'
 
 /**
- * This File Define functions specicif to invoices
+ * This File Define functions specific to invoices
  */
 
 /**
@@ -83,6 +83,9 @@ export const getTodaysSales = async () => {
 }
 
 /**
+ * @author MAHADI
+ * @dateCreated 24/09/2023
+ *
  * Retrieves an Invoice by Customer's phone number
  * @param {string} phone customer phone number
  * @returns {object}
@@ -102,4 +105,33 @@ export const getInvoiceByPhone = async (phone) => {
     })
   )
   return invoices
+}
+
+/**
+ * @author MAHADI
+ * @dateCreated 01/10/2023
+ *
+ * Updates Invoices with null zakat years
+ * (Invoices created in the interval between end of a year and creating a new year)
+ *
+ * @param {string} yearId
+ */
+export const updateNullYearInvoices = async (yearId) => {
+  if (devEnv) {
+    const invoices = await getAll('invoices')
+    invoices.forEach((inv) => {
+      if (inv.zakatYearID === 'null') inv.zakatYearID = yearId
+    })
+    return
+  }
+  const q = query(
+    collection(db, 'invoices'),
+    where('zakatYearID', '==', 'null')
+  )
+  const docsSnapshot = await getDocs(q)
+  const updates = []
+  docsSnapshot.forEach((doc) =>
+    updates.push(updateOne('invoices', { id: doc.id, zakatYearID: yearId }))
+  )
+  await Promise.all(updates)
 }

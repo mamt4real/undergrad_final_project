@@ -9,6 +9,7 @@ import { formatMoney } from '../reducer'
 import { useNavigate } from 'react-router-dom'
 import { createOne, updateOne } from '../firebase/crud'
 import { Invoice } from '../models'
+import { cleanDate } from '../utils/dateFunctions'
 
 const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
   const navigate = useNavigate()
@@ -92,12 +93,15 @@ const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
 
     setSubmitting(true)
     const fn = currentInvoice ? updateOne : createOne
+    // If Year is already due, use null as a placeholder
+    const yearId =
+      Date.now() < cleanDate(activeYear?.endDate) ? activeYear?.id : 'null'
     try {
       const newInvoice = await fn('invoices', {
         ...invoice,
         ...(!!!currentInvoice && {
           userID: user?.id,
-          zakatYearID: activeYear?.id,
+          zakatYearID: yearId,
         }),
       })
       dispatch({

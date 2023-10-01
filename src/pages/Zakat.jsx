@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Loading from '../components/Loading'
 import { CalendarToday } from '@mui/icons-material'
-import {
-  IconButton,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Tooltip,
-  Typography,
-} from '@mui/material'
+import { TableBody, TableCell, TableRow, Typography } from '@mui/material'
 import { formatMoney } from '../reducer'
 import { useStateValue } from '../StateProvider'
 import { cleanDate, dayDifference, toDdMmmYy } from '../utils/dateFunctions'
 import useTable from '../hooks/useTable'
 import { getAll } from '../firebase/crud'
-import { getYearRange, toNDigits } from '../utils/helpers'
+import { getYearRange } from '../utils/helpers'
 import {
   getEstimatedAmountDue,
   getZakatYearsSales,
@@ -23,6 +15,7 @@ import {
 import { ZakatYear } from '../models'
 import { getCurrentAssetsValue } from '../firebase/products'
 import CalculateZakat from '../components/CalculateZakat'
+import ZakatYearInfo from '../components/ZakatYearInfo'
 
 const headCells = [
   { id: 'year', label: 'Year' },
@@ -30,12 +23,13 @@ const headCells = [
   { id: 'closingBalance', label: 'Closinging Bal' },
   { id: 'nisaab', label: 'Nisaab' },
   { id: 'paymentStatus', label: 'Payment Status' },
+  { id: 'actions', label: 'Actions', disableSort: true },
 ]
 
 function Zakat() {
   const [loading, setLoading] = useState(false)
   const [zakatyears, setZakatyears] = useState([])
-  const [filter, setFilter] = useState({ fn: (items) => items })
+  const [filter] = useState({ fn: (items) => items })[0]
   const [currentYear, setCurrentYear] = useState(ZakatYear)
   const [yearSales, setYearSales] = useState(0)
   const [yearDueEst, setYearDueEst] = useState(0)
@@ -47,7 +41,19 @@ function Zakat() {
 
   useEffect(() => {
     let isCanceled = false
-    getAll('zakatyears').then((years) => !isCanceled && setZakatyears(years))
+    setLoading(true)
+    getAll('zakatyears')
+      .then(
+        (years) =>
+          !isCanceled &&
+          setZakatyears(
+            years.sort(
+              (a, b) =>
+                cleanDate(b.endDate).getTime() - cleanDate(a.endDate).getTime()
+            )
+          )
+      )
+      .finally(() => setLoading(false))
     getCurrentAssetsValue().then(
       (value) => !isCanceled && setAssetsInStock(value)
     )
@@ -157,7 +163,7 @@ function Zakat() {
         </div>
         <CalculateZakat
           zakatYear={currentYear}
-          netAssets={yearSales + assetInStock}
+          grossAssets={yearSales + assetInStock}
         />
         {/* <button className='button dark-purple'>Calculate</button> */}
       </section>
@@ -176,6 +182,9 @@ function Zakat() {
                 <TableCell>{formatMoney(y.closingBalance)}</TableCell>
                 <TableCell>{formatMoney(y.nisab)}</TableCell>
                 <TableCell>{y.paymentStatus}</TableCell>
+                <TableCell>
+                  <ZakatYearInfo zakatYear={y} />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
