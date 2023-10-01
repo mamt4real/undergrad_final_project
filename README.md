@@ -48,32 +48,32 @@ git clone https://github.com/mamt4real/undergrad_final_project
 
 2. **Navigate to the Poject Directory:**
 
-```bash
-cd project-directory
-```
+   ```bash
+   cd project-directory
+   ```
 
-3. **Install Dependencies:**
+   3. **Install Dependencies:**
 
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-4. **Firebase Configuration:**
+3. **Firebase Configuration:**
 
-- Create a Firebase project on the Firebase Console.
-- Configure Firebase for the project by running:
+   - Create a Firebase project on the Firebase Console.
+   - Configure Firebase for the project by running:
 
-```bash
-firebase init
-```
+   ```bash
+   firebase init
+   ```
 
-- Follow the prompts and select Firebase Hosting as the deployment option.
-- Connect your project to the Firebase project you created earlier.
+   - Follow the prompts and select Firebase Hosting as the deployment option.
+   - Connect your project to the Firebase project you created earlier.
 
-5. **Environment Variables:**
+4. **Environment Variables:**
 
-- Create a `_config.js` file in the project [firebase directory](./src/firebase/) of your local project.
-- Add the necessary environment variables, including Firebase configuration (Firebase API keys, etc.) in the file using the [example](./src/firebase/_config.example.js).
+   - Create a `_config.js` file in the project [firebase directory](./src/firebase/) of your local project.
+   - Add the necessary environment variables, including Firebase configuration (Firebase API keys, etc.) in the file using the [example](./src/firebase/_config.example.js).
 
 ### Running the Application
 
@@ -87,11 +87,13 @@ npm start
 This will start the development server, and you can access the application in your web browser at http://localhost:3000.
 
 2. **Building for Production:**
-   To build the application for production deployment, use the following command:
 
-```bash
-npm run build
-```
+   - change the variable `devEnv` in the `_config.js` file to false
+   - run the following command:
+
+   ```bash
+   npm run build
+   ```
 
 3. **Firebase Hosting:**
    Deploy the built application to Firebase Hosting:
