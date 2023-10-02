@@ -9,7 +9,7 @@ import {
   monthlySales,
   engineCount,
 } from '../firebase/factory'
-import { formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
 import { useState } from 'react'
 import Loading from '../components/Loading'
 import { getThisYearInvoices } from '../firebase/invoices'

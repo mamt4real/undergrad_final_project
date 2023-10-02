@@ -20,6 +20,12 @@
   text-align: center;
 }
 
+.modal .modal-content p span {
+  font-size: small;
+  font-style: italic;
+  color: lightcoral;
+}
+
 .modal .actions {
   margin-top: 24px;
 }

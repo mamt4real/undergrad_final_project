@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Loading from '../components/Loading'
 import { CalendarToday } from '@mui/icons-material'
 import { TableBody, TableCell, TableRow, Typography } from '@mui/material'
-import { formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
 import { useStateValue } from '../StateProvider'
 import { cleanDate, dayDifference, toDdMmmYy } from '../utils/dateFunctions'
 import useTable from '../hooks/useTable'
@@ -29,7 +29,7 @@ const headCells = [
 function Zakat() {
   const [loading, setLoading] = useState(false)
   const [zakatyears, setZakatyears] = useState([])
-  const [filter] = useState({ fn: (items) => items })[0]
+  const [filter] = useState({ fn: (items) => items })
   const [currentYear, setCurrentYear] = useState(ZakatYear)
   const [yearSales, setYearSales] = useState(0)
   const [yearDueEst, setYearDueEst] = useState(0)

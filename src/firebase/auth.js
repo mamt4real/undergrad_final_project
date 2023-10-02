@@ -23,7 +23,7 @@ import { getOne } from './crud'
  * @param {string} password password for the new user
  * @param {string} name name of the new user
  * @param {"admin" | "user"} role role of the new user
- * @returns {[object, string]}
+ * @returns {Promise<[object, string]>}
  */
 export const createUser = async (email, password, name, role = 'user') => {
   if (devEnv) {

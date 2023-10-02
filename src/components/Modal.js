@@ -8,7 +8,9 @@ function Modal({ closeFunction, modalOptions }) {
       <div className='modal-content'>
         <p>
           {modalOptions.title}
-          {modalOptions.subtitle}
+          <br />
+          <br />
+          <span>{modalOptions.subtitle}</span>
         </p>
         <div className='actions flex'>
           <button className='purple' onClick={closeFunction}>

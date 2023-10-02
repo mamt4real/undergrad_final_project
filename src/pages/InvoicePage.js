@@ -8,13 +8,14 @@ import {
 import '../css/InvoicePage.css'
 import { useStateValue } from '../StateProvider'
 import arrowLeft from '../assets/icon-arrow-left.svg'
-import { formatdate, formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
 
 import Loading from '../components/Loading'
 import Popup from '../components/Popup'
 import useReceipt from '../hooks/useReceipt'
 import { updateProductQuantities } from '../firebase/products'
 import { deleteOne, updateOne } from '../firebase/crud'
+import { toDdMmmYy } from '../utils/dateFunctions'
 
 function InvoicePage() {
   const { invoiceID } = useParams()
@@ -190,10 +191,10 @@ function InvoicePage() {
         <div className='middle flex'>
           <div className='payment flex flex-column'>
             <h4>Invoice Date</h4>
-            <p>{formatdate(currentInvoice.invoiceDate)}</p>
+            <p>{toDdMmmYy(currentInvoice.invoiceDate)}</p>
 
             <h4>Payment Date</h4>
-            <p>{formatdate(currentInvoice.paymentDueDate)}</p>
+            <p>{toDdMmmYy(currentInvoice.paymentDueDate)}</p>
           </div>
           <div className='bill flex flex-column'>
             <h4>Bill to</h4>

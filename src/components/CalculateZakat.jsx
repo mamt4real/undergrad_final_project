@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Popup from './Popup'
 import { Box, Typography } from '@mui/material'
 import { getYearRange } from '../utils/helpers'
-import { formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined'
 import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined'
 import { useEffect } from 'react'
@@ -12,6 +12,7 @@ import {
 } from '../firebase/zakatyears'
 import { cleanDate } from '../utils/dateFunctions'
 import { useStateValue } from '../StateProvider'
+import { useOutletContext } from 'react-router-dom'
 
 function CalculateZakat({ zakatYear, grossAssets }) {
   const dispatch = useStateValue()[1]
@@ -19,9 +20,10 @@ function CalculateZakat({ zakatYear, grossAssets }) {
   const [currentNisaab, setCurrentNisaab] = useState(zakatYear?.nisab || 0)
   const [expenses, setExpenses] = useState(0)
   const [amountDue, setAmountDue] = useState((1 / 40) * grossAssets)
+  const setShowModal = useOutletContext()[1]
 
   const isEnabled = () => {
-    // return true
+    return true
     if (!zakatYear) return false
     return cleanDate(zakatYear.endDate).getTime() <= Date.now()
   }
@@ -40,18 +42,32 @@ function CalculateZakat({ zakatYear, grossAssets }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    try {
-      const newActive = await terminateZakatYear(
-        zakatYear,
-        grossAssets - expenses
-      )
-      dispatch({ type: 'SET_ACTIVE_YEAR', data: newActive })
-      setOpen(false)
-      alert('Zakat Calculated Successfully')
-    } catch (error) {
-      console.error(error)
-      alert('error in calculating the zakat')
+    const effectAction = async () => {
+      try {
+        const newActive = await terminateZakatYear(
+          zakatYear,
+          grossAssets - expenses
+        )
+        dispatch({ type: 'SET_ACTIVE_YEAR', data: newActive })
+        setOpen(false)
+        alert('Zakat Year Calculation completed Successfully')
+      } catch (error) {
+        console.error(error)
+        alert('error in calculating the zakat')
+      }
     }
+    setOpen(false)
+    setShowModal({
+      open: true,
+      title: `Are you sure you want to mark ${getYearRange(
+        zakatYear
+      )} zakat as completed?`,
+      subtitle: "This action can't be reversed!",
+      callback: () =>
+        effectAction()
+          .then()
+          .catch((err) => alert(err.message)),
+    })
   }
 
   return (

@@ -11,7 +11,7 @@ import { EditOutlined, PlusOne } from '@mui/icons-material'
 import Popup from '../components/Popup'
 import '../css/Users.css'
 import EngineForm from '../components/EngineForm'
-import { formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
 import { useStateValue } from '../StateProvider'
 
 import { Link } from 'react-router-dom'

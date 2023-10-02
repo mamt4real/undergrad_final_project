@@ -12,7 +12,8 @@ import {
 } from 'react-thermal-printer'
 
 import 'react-thermal-printer'
-import { formatdate, formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
+import { toDdMmmYy } from '../utils/dateFunctions'
 
 function useReceipt(invoice, closeFunction, printCallback) {
   const itm = invoice?.invoiceItemList[0]
@@ -46,7 +47,7 @@ function useReceipt(invoice, closeFunction, printCallback) {
       <Text bold={true}>
         Address: {invoice?.clientAddress?.substring(0, 23)}
       </Text>
-      <Text bold={true}>Date: {formatdate(invoice?.invoiceDate)}</Text>
+      <Text bold={true}>Date: {toDdMmmYy(invoice?.invoiceDate)}</Text>
       <Br />
 
       <Text align='center' bold={true} underline={true}>

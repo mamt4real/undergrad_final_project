@@ -2,14 +2,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import '../css/Invoice.css'
 import arrowRight from '../assets/icon-arrow-right.svg'
-import { formatdate, formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
+import { toDdMmmYy } from '../utils/dateFunctions'
 
 function Invoice({ invoice }) {
   return (
     <Link className='invoice flex' to={`/invoices/${invoice.id}`}>
       <div className='left flex'>
         <span className='tracking-number'>#{invoice.id}</span>
-        <span className='due-date'>{formatdate(invoice.paymentDueDate)}</span>
+        <span className='due-date'>{toDdMmmYy(invoice.paymentDueDate)}</span>
         <span className='person'>{invoice.clientName}</span>
       </div>
 

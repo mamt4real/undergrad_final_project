@@ -5,7 +5,7 @@ import '../css/InvoiceModal.css'
 
 import { useStateValue } from '../StateProvider'
 import Loading from './Loading'
-import { formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
 import { useNavigate } from 'react-router-dom'
 import { createOne, updateOne } from '../firebase/crud'
 import { Invoice } from '../models'

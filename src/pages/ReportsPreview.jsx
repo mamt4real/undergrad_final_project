@@ -1,11 +1,12 @@
 import React from 'react'
 import { Download, Print, ArrowBack } from '@mui/icons-material'
 import { useStateValue } from '../StateProvider'
-import { formatdate, formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
 import '../css/Reportspreview.css'
 import { Link, useSearchParams } from 'react-router-dom'
 import { DownloadTableExcel } from 'react-export-table-to-excel'
 import { useRef } from 'react'
+import { toDdMmmYy } from '../utils/dateFunctions'
 
 function ReportsPreview() {
   const tableRef = useRef(null)
@@ -63,7 +64,7 @@ function ReportsPreview() {
             {reports?.map((rec, i) => (
               <tr key={rec.id}>
                 <td className='no'>{i + 1}</td>
-                <td>{formatdate(rec.date)}</td>
+                <td>{toDdMmmYy(rec.date)}</td>
                 <td>{rec.itemName}</td>
                 <td>{rec.qty}</td>
                 <td className='money'>{formatMoney(rec.total)}</td>

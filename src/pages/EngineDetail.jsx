@@ -4,13 +4,14 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
-import { formatdate, formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
 import { useStateValue } from '../StateProvider'
 import '../css/EngineDetail.css'
 
 import Popup from '../components/Popup'
 import RestockForm from '../components/RestockForm'
 import { deleteOne, updateOne } from '../firebase/crud'
+import { toDdMmmYy } from '../utils/dateFunctions'
 
 function EngineDetail() {
   const { engineId } = useParams()
@@ -89,7 +90,7 @@ function EngineDetail() {
           <span className='key'>
             <CalendarMonth /> Last Order Date
           </span>
-          <span className='value'>{formatdate(engine?.lastOrderDate)}</span>
+          <span className='value'>{toDdMmmYy(engine?.lastOrderDate)}</span>
         </div>
       </section>
       <section className='actions'>

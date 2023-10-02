@@ -4,12 +4,10 @@ import iconDown from '../assets/icon-arrow-down.svg'
 import iconPlus from '../assets/icon-plus.svg'
 import emptyImage from '../assets/illustration-empty.svg'
 import { useStateValue } from '../StateProvider'
-
 import Invoice from '../components/Invoice'
 import Loading from '../components/Loading'
 import { useOutletContext } from 'react-router-dom'
-import { getAll } from '../firebase/crud'
-import { getInvoiceByPhone } from '../firebase/invoices'
+import { getInvoiceByPhone, getTodaysSales } from '../firebase/invoices'
 
 function Invoices() {
   const [{ invoices }, dispatch] = useStateValue()
@@ -25,8 +23,7 @@ function Invoices() {
     if (invoices.length) return
     let isCanceled = false
     setLoading(true)
-    // db.getTodaysSales()
-    getAll('invoices')
+    getTodaysSales()
       .then((invoices) => {
         if (!isCanceled) dispatch({ type: 'SET_INVOICES', data: invoices })
       })
@@ -35,7 +32,6 @@ function Invoices() {
 
     return () => {
       isCanceled = true
-      setLoading(false)
     }
   }, [dispatch, invoices])
 

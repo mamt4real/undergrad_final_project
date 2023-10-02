@@ -20,7 +20,7 @@ export const getActiveYear = async () => {
     const invoices = await getAll('zakatyears')
     return invoices.find((i) => i.status === 'active')
   }
-  const q = query(collection(db, 'invoices'), where('status', '==', 'active'))
+  const q = query(collection(db, 'zakatyears'), where('status', '==', 'active'))
   const docsSnapshot = await getDocs(q)
   const years = []
   docsSnapshot.forEach((doc) =>
@@ -191,5 +191,20 @@ export const markYearAsPaid = async (yearId) => {
     id: yearId,
     paymentStatus: 'paid',
     datePaid: new Date(),
+  })
+}
+
+/**
+ * Initialize an Active Year at the initial deployment of the application
+ * @returns {Promise<ZakatYear>}
+ */
+export const initializeActiveYear = async () => {
+  return createOne('zakatyears', {
+    openingBalance: await getCurrentAssetsValue(),
+    nisab: await getCurrentNisaabRate(),
+    beginDate: new Date(),
+    endDate: new Date(Date.now() + 12 * oneMonth),
+    status: 'active',
+    paymentStatus: 'not-paid',
   })
 }

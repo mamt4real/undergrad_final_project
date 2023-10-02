@@ -1,7 +1,7 @@
 import { CalendarToday } from '@mui/icons-material'
 import React, { useState } from 'react'
 
-import { formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
 import '../css/Reports.css'
 import { Typography } from '@mui/material'
 import { useStateValue } from '../StateProvider'

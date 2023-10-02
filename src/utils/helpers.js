@@ -60,3 +60,18 @@ export const convertUsdToNaira = async (usd) => {
   })
   return Number(response.data.split(',').slice(-1)[0])
 }
+
+/**
+ * Format a number to money format
+ * @param {number} amount
+ * @returns
+ */
+export const formatMoney = (amount) => {
+  if (isNaN(amount)) amount = 0.0
+  return Number(amount).toLocaleString('us-US', {
+    style: 'currency',
+    currency: 'NGN',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+}

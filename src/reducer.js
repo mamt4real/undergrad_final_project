@@ -15,28 +15,6 @@ export const initialState = {
   token: null,
 }
 
-export const formatMoney = (amount) => {
-  if (isNaN(amount)) amount = 0.0
-  return Number(amount).toLocaleString('us-US', {
-    style: 'currency',
-    currency: 'NGN',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })
-}
-
-export const formatdate = (dateObj) => {
-  const date = dateObj?.hasOwnProperty('seconds')
-    ? new Date(dateObj?.seconds * 1000 + dateObj?.nanoseconds / 1000000)
-    : new Date(dateObj)
-
-  return date.toLocaleDateString('en-us', {
-    year: 'numeric',
-    month: 'short',
-    day: '2-digit',
-  })
-}
-
 const updateFunction = (collection, modified, isDelete = false) => {
   const index = collection.findIndex((ses) => ses.id === modified?.id)
   const updated = [...collection]
@@ -63,7 +41,8 @@ export const reducer = (state, action) => {
         invoices: updateFunction(state.invoices, { id: action.data }, true),
       }
     case 'ADD_INVOICE':
-      state.invoices.splice(0, 0, action.data)
+      !state.invoices.find((i) => i.id === action.data?.id) &&
+        state.invoices.splice(0, 0, action.data)
       return state
 
     case 'SET_CURRENT_INVOICE':
@@ -102,7 +81,8 @@ export const reducer = (state, action) => {
         products: updateFunction(state.products, { id: action.data }, true),
       }
     case 'ADD_ENGINE':
-      state.products.splice(0, 0, action.data)
+      !state.products.find((p) => p.id === action.data?.id) &&
+        state.products.splice(0, 0, action.data)
       return state
     case 'SET_STAFFS':
       return {
@@ -120,7 +100,8 @@ export const reducer = (state, action) => {
         staffs: updateFunction(state.staffs, { id: action.data }, true),
       }
     case 'ADD_STAFF':
-      state.staffs.splice(0, 0, action.data)
+      !state.staffs.find((s) => s.id === action.data?.id) &&
+        state.staffs.splice(0, 0, action.data)
       return state
     case 'TOGGLE_INVOICE_MODAL':
       return {

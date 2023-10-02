@@ -5,7 +5,7 @@ import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { CalendarMonth, EditOutlined } from '@mui/icons-material'
 import { getYearRange } from '../utils/helpers'
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined'
-import { formatMoney } from '../reducer'
+import { formatMoney } from '../utils/helpers'
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined'
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined'
 import PriceCheckOutlinedIcon from '@mui/icons-material/PriceCheckOutlined'
@@ -29,6 +29,7 @@ function ZakatYearInfo({ zakatYear }) {
         alert('Error updating year\n' + error.message)
       }
     }
+    setOpen(false)
     setShowModal({
       open: true,
       title: `Are you sure you want to mark ${getYearRange(
