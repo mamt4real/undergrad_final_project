@@ -19,7 +19,21 @@ _The "Design and Implementation of a Generic Web-Based Invoicing and Zakat Track
 
 ## Entity relationship Diagram
 
-## ![E-R Diagram](/ER-Diagram.png)
+![E-R Diagram](/ER-Diagram.png)
+
+---
+
+## Technologies and Tools
+
+- ReactJs
+- Firebase (Hosting, Authentication, Firestore, Storage etc)
+- Mui Styling Library
+- [GoldApi](https://www.goldapi.io) & [XEapi](https://xecdapi.xe.com)
+- etc.
+
+---
+
+#### [Live Url](https://zakat-invoice-tacking.web.app)
 
 ---
 
