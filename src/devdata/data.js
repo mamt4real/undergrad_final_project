@@ -12,7 +12,14 @@ export const users = Array(4)
   }))
 
 // Dummy Products
-const temp = ['TIGER ELEMAX', 'YAMAHA', 'TECH', 'TECH', 'BIBUT']
+const temp = [
+  'TIGER ELEMAX',
+  'YAMAHA',
+  'TECH',
+  'TECH',
+  'BIBUT',
+  '4ft X 4ft Window',
+]
 export const products = temp.map((name) => {
   const costPrice = Math.round(Math.random() * 10000000) / 100
   const profit = Math.round(Math.random() * 20 * costPrice) / 100
@@ -22,6 +29,7 @@ export const products = temp.map((name) => {
     costPrice,
     quantity: Math.ceil(Math.random() * 100),
     basePrice: costPrice + profit,
+    lastOrderDate: new Date(),
   }
 })
 

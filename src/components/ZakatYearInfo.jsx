@@ -97,7 +97,11 @@ function ZakatYearInfo({ zakatYear }) {
             >
               <AccountBalanceWalletOutlinedIcon /> Closing Balance
             </Typography>
-            <Typography>{formatMoney(zakatYear?.closingBalance)}</Typography>
+            <Typography>
+              {zakatYear?.closingBalance
+                ? formatMoney(zakatYear?.closingBalance)
+                : 'N/A'}
+            </Typography>
           </Box>
           <Box display={'flex'} gap={1}>
             <Typography
@@ -109,7 +113,11 @@ function ZakatYearInfo({ zakatYear }) {
             >
               <MonetizationOnOutlinedIcon /> Closin Nisaab
             </Typography>
-            <Typography>{formatMoney(zakatYear?.closingNisab)}</Typography>
+            <Typography>
+              {zakatYear?.closingNisab
+                ? formatMoney(zakatYear?.closingNisab)
+                : 'N/A'}
+            </Typography>
           </Box>
           <Box display={'flex'} gap={1}>
             <Typography
