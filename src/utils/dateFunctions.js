@@ -30,6 +30,7 @@ export const toDdMmmYy = (dateObj) => {
  */
 
 export const cleanDate = (date) => {
+  if (typeof date === Date) return date
   if (!(date instanceof Date)) {
     if (date?.hasOwnProperty('seconds'))
       date = new Date(date?.seconds * 1000 + date?.nanoseconds / 1000000)

@@ -163,7 +163,8 @@ export const terminateZakatYear = async (year, netAssets) => {
     }
   // Next Year will start from end of this year with two days head start
   const beginDate = new Date(cleanDate(year.endDate).getTime() + 2 * oneDay)
-  const endDate = new Date(beginDate.getTime() + 12 * oneMonth)
+  // One Lunar Year = 354 Days
+  const endDate = new Date(beginDate.getTime() + 12 * oneMonth - 6 * oneDay)
   const newYear = {
     // Next Year would start with the netAsset after deducting the due amount
     openingBalance: netAssets - amountDue,

@@ -8,6 +8,8 @@ import Invoice from '../components/Invoice'
 import Loading from '../components/Loading'
 import { useOutletContext } from 'react-router-dom'
 import { getInvoiceByPhone, getTodaysSales } from '../firebase/invoices'
+import { devEnv } from '../firebase/_config'
+import { getAll } from '../firebase/crud'
 
 function Invoices() {
   const [{ invoices }, dispatch] = useStateValue()
@@ -23,7 +25,7 @@ function Invoices() {
     if (invoices.length) return
     let isCanceled = false
     setLoading(true)
-    getTodaysSales()
+    ;(devEnv ? getAll('invoices') : getTodaysSales())
       .then((invoices) => {
         if (!isCanceled) dispatch({ type: 'SET_INVOICES', data: invoices })
       })
@@ -33,7 +35,7 @@ function Invoices() {
     return () => {
       isCanceled = true
     }
-  }, [dispatch, invoices])
+  }, [])
 
   const handleFilter = (e) => {
     const text = e.target.innerText

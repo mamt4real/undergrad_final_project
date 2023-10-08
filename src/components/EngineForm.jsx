@@ -59,7 +59,7 @@ function EngineForm({ engine, close }) {
       <div className='input flex flex-column'>
         <label htmlFor='name'>
           <Engineering />
-          Engine Name
+          Product Name
         </label>
         <input
           type='text'

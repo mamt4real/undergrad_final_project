@@ -61,6 +61,11 @@ const data = Array(15)
   .fill(null)
   .map((_, i) => {
     let invoiceTotal = 0
+    const invoiceDate = new Date(
+      i < 8 ? 2022 : 2023,
+      Math.round(Math.random() * 12),
+      Math.round(Math.random() * 25)
+    )
     return {
       id: uid(6),
       billerStreetAddress: 'Street Address' + (i + 1),
@@ -75,13 +80,11 @@ const data = Array(15)
       clientZipCode: 'zip code' + (i + 1),
       clientCountry: 'client country ' + (i + 1),
       invoiceDateUnix: '',
-      invoiceDate: new Date(
-        i < 8 ? 2022 : 2023,
-        Math.round(Math.random() * 12),
-        Math.round(Math.random() * 25)
+      invoiceDate,
+      paymentTerms: i % 2 ? 30 : 60,
+      paymentDueDate: new Date(
+        invoiceDate.getTime() + oneDay * (30 * ((i % 2) + 1))
       ),
-      paymentTerms: 'some terms',
-      paymentDueDate: new Date(),
       paymentDueDateUnix: new Date(Date.now() + (i + 1) * 86400),
       productDescription: '',
       invoicePending: !!(i % 2),

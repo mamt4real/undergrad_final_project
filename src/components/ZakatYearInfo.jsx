@@ -46,11 +46,15 @@ function ZakatYearInfo({ zakatYear }) {
   return (
     <div className='zakatyearinfo'>
       <Popup title='Zakat Year Infomation' open={openPopup} setOpen={setOpen}>
-        <Box display={'flex'} gap={1.5} flexDirection={'column'}>
+        <Box
+          display={'flex'}
+          sx={{ gap: { xs: 1, md: 2, lg: 2.5 } }}
+          flexDirection={'column'}
+        >
           <Box display={'flex'} gap={1}>
             <Typography
               flex={1}
-              gap={0.5}
+              gap={0.8}
               fontWeight={'bold'}
               display={'flex'}
               alignItems={'center'}
@@ -62,7 +66,7 @@ function ZakatYearInfo({ zakatYear }) {
           <Box display={'flex'} gap={1}>
             <Typography
               flex={1}
-              gap={0.5}
+              gap={0.8}
               fontWeight={'bold'}
               display={'flex'}
               alignItems={'center'}
@@ -74,7 +78,7 @@ function ZakatYearInfo({ zakatYear }) {
           <Box display={'flex'} gap={1}>
             <Typography
               flex={1}
-              gap={0.5}
+              gap={0.8}
               fontWeight={'bold'}
               display={'flex'}
               alignItems={'center'}
@@ -86,7 +90,7 @@ function ZakatYearInfo({ zakatYear }) {
           <Box display={'flex'} gap={1}>
             <Typography
               flex={1}
-              gap={0.5}
+              gap={0.8}
               fontWeight={'bold'}
               display={'flex'}
               alignItems={'center'}
@@ -98,7 +102,7 @@ function ZakatYearInfo({ zakatYear }) {
           <Box display={'flex'} gap={1}>
             <Typography
               flex={1}
-              gap={0.5}
+              gap={0.8}
               fontWeight={'bold'}
               display={'flex'}
               alignItems={'center'}
@@ -110,7 +114,7 @@ function ZakatYearInfo({ zakatYear }) {
           <Box display={'flex'} gap={1}>
             <Typography
               flex={1}
-              gap={0.5}
+              gap={0.8}
               fontWeight={'bold'}
               display={'flex'}
               alignItems={'center'}
@@ -125,7 +129,7 @@ function ZakatYearInfo({ zakatYear }) {
           <Box display={'flex'} gap={1}>
             <Typography
               flex={1}
-              gap={0.5}
+              gap={0.8}
               fontWeight={'bold'}
               display={'flex'}
               alignItems={'center'}
@@ -150,7 +154,7 @@ function ZakatYearInfo({ zakatYear }) {
           <Box display={'flex'} gap={1}>
             <Typography
               flex={1}
-              gap={0.5}
+              gap={0.8}
               fontWeight={'bold'}
               display={'flex'}
               alignItems={'center'}

@@ -23,7 +23,7 @@ function CalculateZakat({ zakatYear, grossAssets }) {
   const setShowModal = useOutletContext()[1]
 
   const isEnabled = () => {
-    return true
+    // return true
     if (!zakatYear) return false
     return cleanDate(zakatYear.endDate).getTime() <= Date.now()
   }

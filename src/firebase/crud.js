@@ -120,6 +120,7 @@ export const createOne = async (colname, data) => {
  * @returns {object}
  */
 export const updateOne = async (colname, docData) => {
+  docData.updateAt = new Date()
   if (devEnv) {
     let data
     switch (colname) {

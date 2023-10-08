@@ -4,20 +4,23 @@ import { Navigate } from 'react-router-dom'
 import { useStateValue } from '../StateProvider'
 import { getOne } from '../firebase/crud'
 import { userChanged } from '../firebase/auth'
+import { devEnv } from '../firebase/_config'
 
 function ProtectedRoute({ children, restrictedTo = [], redirect = '/' }) {
   const [{ user }, dispatch] = useStateValue()
 
   useEffect(() => {
-    const unsubscribe = userChanged((user) => {
-      if (user) {
-        getOne('users', user.uid)
-          .then((updated) => dispatch({ type: 'SET_USER', data: updated }))
-          .catch(console.error)
-      }
-    })
+    let unsubscribe
+    if (!devEnv)
+      unsubscribe = userChanged((user) => {
+        if (user) {
+          getOne('users', user.uid)
+            .then((updated) => dispatch({ type: 'SET_USER', data: updated }))
+            .catch(console.error)
+        }
+      })
 
-    return () => unsubscribe()
+    return () => !devEnv && unsubscribe()
   }, [dispatch])
 
   if (!user) {

@@ -3,6 +3,7 @@ import { Outlet, useOutletContext } from 'react-router-dom'
 import { useStateValue } from './StateProvider'
 import { getAll } from './firebase/crud'
 import { getActiveYear, initializeActiveYear } from './firebase/zakatyears'
+import ZakatDueNotification from './components/ZakatDueNotification'
 
 function AdminBasePage() {
   // Load Some admin level data
@@ -29,6 +30,7 @@ function AdminBasePage() {
   return (
     <>
       <Outlet context={useOutletContext()} />
+      <ZakatDueNotification />
     </>
   )
 }

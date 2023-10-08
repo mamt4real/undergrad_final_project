@@ -117,7 +117,7 @@
 }
 .item-list .table-items .qty,
 .table-heading .qty {
-  flex-basis: 10%;
+  flex-basis: 18%;
   text-align: center;
 }
 .item-list .table-items .qty.delete,
@@ -139,6 +139,7 @@
 .table-heading .total {
   flex-basis: 20%;
   align-self: center;
+  text-align: right;
 }
 
 .table-items img {
@@ -184,6 +185,6 @@
     margin-bottom: 48px;
   }
   .input {
-    margin-bottom: 24px;
+    margin-bottom: 18px;
   }
 }

@@ -127,7 +127,9 @@ function Dashboard() {
           <CardContent>
             <div className='flex' style={{ alignItems: 'center' }}>
               <span className='key'>Sales</span>
-              <span className='money'>{formatMoney(stats.lastMonth)}</span>
+              <span className='money'>
+                {formatMoney(stats.lastMonth.sales)}
+              </span>
               {/* <TrendingDown /> */}
             </div>
             <div className='flex' style={{ alignItems: 'center' }}>

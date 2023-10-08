@@ -9,7 +9,7 @@ import { formatMoney } from '../utils/helpers'
 import { useNavigate } from 'react-router-dom'
 import { createOne, updateOne } from '../firebase/crud'
 import { Invoice } from '../models'
-import { cleanDate } from '../utils/dateFunctions'
+import { cleanDate, toDdMmmYy } from '../utils/dateFunctions'
 
 const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
   const navigate = useNavigate()
@@ -50,7 +50,7 @@ const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
     if (name === 'itemName') {
       const engine = products.find((e) => e.name === value)
       if (engine) {
-        items[index]['price'] = engine.basePrice
+        items[index]['price'] = Number(engine.basePrice.toFixed(2))
         items[index]['cost'] = engine.costPrice
       }
     }
@@ -178,13 +178,51 @@ const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
 
         {/* Invoice Work Details */}
         <div className='invoice-work flex flex-column'>
+          <div className='payment flex'>
+            <div className='input flex flex-column'>
+              <label htmlFor='invoiceDate'>Invoice Date</label>
+              <input
+                type='text'
+                id='invoiceDate'
+                name='invoiceDate'
+                disabled
+                value={toDdMmmYy(invoice.invoiceDate)}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='input flex flex-column'>
+              <label htmlFor='paymentDueDate'>Payment Due </label>
+              <input
+                type='text'
+                disabled
+                id='paymentDueDate'
+                name='paymentDueDate'
+                value={toDdMmmYy(invoice.paymentDueDate)}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='input flex flex-column'>
+              <label htmlFor='paymentTerms'>Payment Terms</label>
+              <select
+                type='text'
+                id='paymentTerms'
+                name='paymentTerms'
+                required
+                value={invoice.paymentTerms}
+                onChange={handleChange}
+              >
+                <option value='30'>Next 30 days</option>
+                <option value='60'>Next 60 days</option>
+              </select>
+            </div>
+          </div>
           <div className='work-items'>
             <h3>Item List</h3>
             <table className='item-list'>
               <thead>
                 <tr className='table-heading flex'>
                   <th className='item-name'>Item Name</th>
-                  <th className='price engineNo'>Item No</th>
+                  {/* <th className='price engineNo'>Item No</th> */}
                   <th className='qty'>Qty</th>
                   <th className='price'>Price</th>
                   <th className='total'>Total</th>
@@ -200,7 +238,7 @@ const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
                         name={'itemName'}
                         onChange={(e) => handleItemChange(e, i)}
                       >
-                        <option value=''>Select Engine</option>
+                        <option value=''>Select Product</option>
                         {products
                           .filter((e) => e.quantity)
                           .map((e, i) => (
@@ -210,14 +248,14 @@ const InvoiceModal = forwardRef(({ closeFunction, showModal }, ref) => {
                           ))}
                       </select>
                     </td>
-                    <td className='price engineNo'>
+                    {/* <td className='price engineNo'>
                       <input
                         type='text'
                         name='engineNo'
                         value={item.engineNo}
                         onChange={(e) => handleItemChange(e, i)}
                       />
-                    </td>
+                    </td> */}
                     <td className='qty'>
                       <input
                         type='number'

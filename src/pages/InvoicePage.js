@@ -26,25 +26,33 @@ function InvoicePage() {
   const [fn, setShowModal] = useOutletContext()
 
   const updateStatus = (status, printed = false) => {
-    updateOne('invoices', {
-      ...currentInvoice,
-      ...(printed ? { printed } : {}),
-      invoicePending: false,
-      invoiceDraft: false,
-      invoicePaid: false,
-      [`invoice${status}`]: true,
-    })
-      .then((updated) => {
-        dispatch({
-          type: 'UPDATE_INVOICE',
-          data: updated,
-        })
-        dispatch({
-          type: 'SET_CURRENT_INVOICE',
-          data: updated ? updated.id : currentInvoice?.id,
-        })
+    const effectUpdate = () =>
+      updateOne('invoices', {
+        ...currentInvoice,
+        ...(printed ? { printed } : {}),
+        invoicePending: false,
+        invoiceDraft: false,
+        invoicePaid: false,
+        [`invoice${status}`]: true,
       })
-      .catch(console.log)
+        .then((updated) => {
+          dispatch({
+            type: 'UPDATE_INVOICE',
+            data: updated,
+          })
+          dispatch({
+            type: 'SET_CURRENT_INVOICE',
+            data: updated ? updated.id : currentInvoice?.id,
+          })
+        })
+        .catch(console.log)
+
+    setShowModal({
+      open: true,
+      title: `Are you sure you want to Update the Status of this invoice to ${status}?`,
+      subtitle: "This action can't be reversed!",
+      callback: () => effectUpdate().catch((err) => alert(err.message)),
+    })
   }
 
   const printCallback = () => {
